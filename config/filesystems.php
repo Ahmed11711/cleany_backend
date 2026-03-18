@@ -40,14 +40,10 @@ return [
 
         'public' => [
             'driver' => 'local',
-            // 'root' => storage_path('app/public'),
-            'root' => public_path('storage'), // ده هيخلي الصور تترفع جوه public/storage مباشرة
-            'url' => rtrim(env('APP_URL', 'http://localhost'), '/') . '/storage',
+            'root' => public_path('media'),
+            'url' => env('APP_URL') . '/media',
             'visibility' => 'public',
-            'throw' => false,
-            'report' => false,
         ],
-
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),
