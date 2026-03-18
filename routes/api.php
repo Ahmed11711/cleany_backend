@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Route;
 
 
 
-Route::get('test2', function () {
+Route::get('test22', function () {
     return response()->json(['message' => 'API is working']);
 });
 Route::prefix('v1/auth')->group(function () {
@@ -21,7 +21,6 @@ Route::prefix('v1/auth')->group(function () {
     Route::get('me', [LoginController::class, 'me'])->middleware(JwtMiddleware::class);
 });
 
-// 1. الموبايل أبلكيشن (App)
 Route::prefix('v1/app')->name('app.')->group(function () {
     Route::get('categories', [CategoryController::class, 'index']);
     Route::get('categories/{id}/companies', [CategoryController::class, 'getCompaniesByCategory']);
