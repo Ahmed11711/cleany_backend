@@ -12,7 +12,7 @@ use App\Http\Controllers\Admin\CategoryCompany\CategoryCompanyController;
 
 
 
-Route::prefix('v1')->group(function () {
+Route::prefix('v1/admin')->group(function () {
     Route::apiResource('users', UserController::class)->names('user');
     Route::apiResource('categories', CategoryController::class)->names('category');
     Route::apiResource('regions', RegionController::class)->names('region');

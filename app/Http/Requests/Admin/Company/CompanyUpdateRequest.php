@@ -16,6 +16,7 @@ class CompanyUpdateRequest extends BaseRequest
         return [
             'name' => 'sometimes|required|string|max:255',
             'logo' => 'nullable|sometimes|file',
+            'hourly_rate' => 'nullable|sometimes|numeric|min:0',
             'address' => 'nullable|sometimes|string|max:255',
             'phone' => 'nullable|sometimes|string|max:255',
             'description' => 'nullable|sometimes|string',

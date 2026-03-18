@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('company_id')->constrained('companies')->onDelete('cascade');
             $table->string('service_name');
             $table->decimal('price', 8, 2)->nullable();
+            $table->decimal('price_today', 8, 2)->nullable();
             $table->timestamps();
         });
     }

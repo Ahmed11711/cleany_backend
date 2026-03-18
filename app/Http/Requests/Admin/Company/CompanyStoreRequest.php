@@ -16,6 +16,7 @@ class CompanyStoreRequest extends BaseRequest
         return [
             'name' => 'required|string|max:255',
             'logo' => 'required|file',
+            'hourly_rate' => 'nullable|numeric|min:0',
             'address' => 'nullable|string|max:255',
             'phone' => 'nullable|string|max:255',
             'description' => 'required|string',
