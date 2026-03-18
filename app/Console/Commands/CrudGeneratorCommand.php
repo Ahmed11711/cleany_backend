@@ -1,0 +1,67 @@
+<?php
+
+namespace App\Console\Commands;
+
+use App\Services\command\ApiRouteService;
+use App\Services\command\ControllerGeneratorDRY;
+use App\Services\command\ObserverGenerator;
+use App\Services\command\ObserverRegistrationService;
+use App\Services\command\ProviderBindService;
+use App\Services\command\RelationSyncService;
+use App\Services\command\RepositoryGenerator;
+use App\Services\command\RequestGenerator;
+use App\Services\command\ResourceGenerator;
+use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Log;
+
+class CrudGeneratorCommand extends Command
+{
+        protected $signature = 'ahmed {model} {--cache} ';
+
+        protected $description = 'Generate CRUD (Controller, Requests, Resource, Repository) inside an HMVC Module';
+
+        public function handle()
+        {
+                // $module = $this->argument('module');
+                $model = $this->argument('model');
+                $useCache = $this->option('cache');
+                // $seeder = $this->argument('seed') ?? 'True';
+
+
+
+                RepositoryGenerator::generate($model);
+                // Generate Request Validation
+                RequestGenerator::make($model);
+                ResourceGenerator::make($model);
+                // Generate Api Resource
+                ApiRouteService::make($model);
+                // Generate Bind Repository
+                ProviderBindService::make($model);
+
+
+                ControllerGeneratorDRY::make($model);
+
+                $this->info("CRUD generated for {$model} inside{");
+
+                Artisan::call('optimize');
+                $this->info("Artisan optimize executed successfully.");
+                $this->info('Artisan optimize executed successfully.');
+
+                // Sync Info
+                // InfoSyncService::make($module, $model);
+                // RelationSyncService::make($module, $model);
+
+                // $this->info("CRUD generated for {$model} ");
+
+                if ($useCache) {
+                        $observerClass = ObserverGenerator::make($model);
+                        ObserverRegistrationService::register($model, $observerClass);
+
+                        $this->info("✅ Observer created and registered successfully.");
+                }
+
+                Artisan::call('optimize');
+                $this->info("Artisan optimize executed successfully.");
+        }
+}
