@@ -24,21 +24,23 @@ use App\Repositories\User\UserRepository;
 use App\Repositories\User\UserRepositoryInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Gate;
 
 class AppServiceProvider extends ServiceProvider
 {
     /**
      * Register any application services.
      */
-    public function register(): void {
-//
+    public function register(): void
+    {
+        //
         $this->app->bind(UserRepositoryInterface::class, UserRepository::class);
         $this->app->bind(CompanyRepositoryInterface::class, CompanyRepository::class);
         $this->app->bind(RegionRepositoryInterface::class, RegionRepository::class);
         $this->app->bind(CategoryRepositoryInterface::class, CategoryRepository::class);
         $this->app->bind(SpecialtyRepositoryInterface::class, SpecialtyRepository::class);
         $this->app->bind(CategoryCompanyRepositoryInterface::class, CategoryCompanyRepository::class);
-}
+    }
 
     /**
      * Bootstrap any application services.
@@ -49,5 +51,8 @@ class AppServiceProvider extends ServiceProvider
         \App\Models\Category::observe(\App\Observers\Category\CategoryObserver::class);
         User::observe(UserObserver::class);
         Model::unguard();
+        Gate::define('viewApiDocs', function ($user = null) {
+            return true; // Allow access to API docs for all users, including guests
+        });
     }
 }
