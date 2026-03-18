@@ -21,12 +21,12 @@ Route::prefix('v1/auth')->group(function () {
     Route::get('me', [LoginController::class, 'me'])->middleware(JwtMiddleware::class);
 });
 
-Route::prefix('v1')->group(function () {
+// 1. الموبايل أبلكيشن (App)
+Route::prefix('v1/app')->name('app.')->group(function () {
     Route::get('categories', [CategoryController::class, 'index']);
     Route::get('categories/{id}/companies', [CategoryController::class, 'getCompaniesByCategory']);
     Route::get('companies/{id}', [CompanyController::class, 'show']);
 });
-
 
 
 

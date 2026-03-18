@@ -12,6 +12,9 @@ use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
+    /**
+     * @tags Mobile App
+     */
     use ApiResponseTrait;
     public function index()
     {

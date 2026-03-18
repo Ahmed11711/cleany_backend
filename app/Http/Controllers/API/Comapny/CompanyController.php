@@ -10,6 +10,9 @@ use Illuminate\Http\Request;
 
 class CompanyController extends Controller
 {
+    /**
+     * @tags Mobile App
+     */
     use ApiResponseTrait;
     public function show($companyId)
     {
