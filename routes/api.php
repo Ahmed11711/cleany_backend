@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Route;
 
 
 
-Route::get('test22', function () {
+Route::get('test2', function () {
     return response()->json(['message' => 'API is working']);
 });
 Route::prefix('v1/auth')->group(function () {
