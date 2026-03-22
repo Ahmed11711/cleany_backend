@@ -23,6 +23,7 @@ class CompanyStoreRequest extends BaseRequest
             'rating' => 'required|numeric|min:0|max:5',
             'is_verified' => 'required|integer',
             'admin_id' => 'required|integer|exists:users,id',
+            'free_delivery' => 'nullable|boolean',
         ];
     }
 }

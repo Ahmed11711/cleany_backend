@@ -12,7 +12,6 @@ class ServiceSeeder extends Seeder
     {
         $companies = Company::all();
 
-        // قائمة خدمات واقعية لمجال التنظيف
         $servicesPool = [
             'Standard Kitchen Cleaning',
             'Full Bathroom Sanitization',
@@ -24,19 +23,21 @@ class ServiceSeeder extends Seeder
         ];
 
         foreach ($companies as $company) {
-            // كل شركة هنديها من 3 لـ 5 خدمات عشوائية من القائمة
             $randomServices = array_rand(array_flip($servicesPool), rand(3, 5));
 
             foreach ((array)$randomServices as $name) {
-                $originalPrice = rand(100, 500);
-                // السعر النهاردة هيكون خصم 10% لـ 30% من السعر الأصلي (اختياري)
-                $discount = rand(0, 1) ? $originalPrice * (rand(70, 90) / 100) : null;
+                $originalPrice = rand(150, 600);
+
+                $discountPercentage = rand(0, 1) ? rand(5, 25) : 0;
+
+                $priceToday = rand(0, 1) ? $originalPrice * (rand(70, 90) / 100) : null;
 
                 Service::create([
                     'company_id'   => $company->id,
                     'service_name' => $name,
                     'price'        => $originalPrice,
-                    'price_today'  => $discount,
+                    'price_today'  => $priceToday,
+                    'discount'     => $discountPercentage,
                 ]);
             }
         }

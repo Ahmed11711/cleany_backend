@@ -25,6 +25,7 @@ class DatabaseSeeder extends Seeder
             CompanyCategorySeeder::class,
             ServiceSeeder::class,
             SpecialtySeeder::class,
+            AvailabilitySeeder::class,
         ]);
     }
 }

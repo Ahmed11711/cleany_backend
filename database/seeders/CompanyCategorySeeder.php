@@ -16,7 +16,6 @@ class CompanyCategorySeeder extends Seeder
         $regions = Region::all();
 
         foreach ($companies as $company) {
-            // كل شركة هنربطها بـ 2 لـ 3 أقسام عشوائية
             $randomCategories = $categories->random(rand(2, 3));
 
             foreach ($randomCategories as $category) {

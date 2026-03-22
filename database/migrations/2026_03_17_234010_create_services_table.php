@@ -17,6 +17,8 @@ return new class extends Migration
             $table->string('service_name');
             $table->decimal('price', 8, 2)->nullable();
             $table->decimal('price_today', 8, 2)->nullable();
+            // discount
+            $table->integer('discount')->default(0); // 10%
             $table->timestamps();
         });
     }

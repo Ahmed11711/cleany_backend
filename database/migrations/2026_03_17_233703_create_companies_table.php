@@ -21,6 +21,7 @@ return new class extends Migration
             $table->decimal('rating', 3, 2)->default(0.00);
             $table->boolean('is_verified')->default(false);
             $table->decimal('hourly_rate', 8, 2)->nullable();
+            $table->boolean('free_delivery')->default(false);
             $table->foreignId('admin_id')->constrained('users');
             $table->timestamps();
         });

@@ -32,4 +32,8 @@ class Company extends Model
         return $this->belongsToMany(Category::class, 'category_company')
             ->withPivot('region_id');
     }
+    public function availabilities()
+    {
+        return $this->hasMany(Availability::class);
+    }
 }

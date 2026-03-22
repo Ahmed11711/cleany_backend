@@ -18,6 +18,7 @@ class CompanyResource extends JsonResource
             'description' => $this->description,
             'rating' => $this->rating,
             'is_verified' => $this->is_verified,
+            'free_delivery' => $this->free_delivery,
             'admin_id' => $this->admin_id,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,

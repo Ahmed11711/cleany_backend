@@ -23,6 +23,7 @@ class CompanyUpdateRequest extends BaseRequest
             'rating' => 'nullable|sometimes|numeric|min:0|max:5',
             'is_verified' => 'sometimes|required|integer',
             'admin_id' => 'sometimes|required|integer|exists:users,id',
+            'free_delivery' => 'nullable|sometimes|boolean',
         ];
     }
 }

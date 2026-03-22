@@ -18,6 +18,7 @@ class ApiCompanyResource extends JsonResource
             'rating' => $this->rating,
             'hourly_rate' => $this->hourly_rate,
             'region_id' => $this->pivot ? $this->pivot->region_id : null,
+            'free_delivery' => $this->free_delivery,
             'services' => ApiServiceResource::collection($this->services),
 
 
