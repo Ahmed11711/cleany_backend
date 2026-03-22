@@ -30,6 +30,7 @@ class JwtMiddleware
             // 2. Inject user data into the request for easy access in controllers
             $request->merge([
                 'user_id' => $user->id,
+                'user_email' => $user->email,
                 'user_role' => $user->role,
             ]);
         } catch (Exception $e) {

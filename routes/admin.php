@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\User\UserController;
 use App\Http\Controllers\Company\Dashboard\MyCompnayController;
 use App\Http\Middleware\JwtMiddleware;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\Transaction\TransactionController;
 use App\Http\Controllers\Admin\CategoryCompany\CategoryCompanyController;
 
 
@@ -27,4 +28,8 @@ Route::prefix('v1/company')->middleware(JwtMiddleware::class)->group(function ()
     Route::get('my-company', [MyCompnayController::class, 'index'])->name('company.my.index');
     Route::post('my-company', [MyCompnayController::class, 'store'])->name('company.my.store');
     Route::put('my-company', [MyCompnayController::class, 'update'])->name('company.my.update');
+});
+
+Route::prefix('v1')->group(function () {
+    Route::apiResource('transactions', TransactionController::class)->names('transaction');
 });

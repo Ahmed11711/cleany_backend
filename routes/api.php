@@ -4,8 +4,10 @@ use \App\Http\Controllers\API\Category\CategoryController;
 use \App\Http\Controllers\Api\Comapny\CompanyController;
 use \App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Api\Comapny\BookingController;
+use App\Http\Controllers\Api\Payment\createLinkPaymentController;
 use App\Http\Middleware\JwtMiddleware;
 use Illuminate\Support\Facades\Route;
+
 
 
 
@@ -28,7 +30,9 @@ Route::prefix('v1/app')->name('app.')->group(function () {
     Route::get('categories/{id}', [CategoryController::class, 'getCompaniesByCategory']);
     Route::get('companies/{id}', [CompanyController::class, 'show']);
     Route::get('companies/{id}/available-slots', [CompanyController::class, 'getAvailableSlots']);
-    Route::post('booking', [BookingController::class, 'store'])->middleware(JwtMiddleware::class);;
+    Route::post('booking', [BookingController::class, 'store'])->middleware(JwtMiddleware::class);
+    Route::post('create-link-payment', [createLinkPaymentController::class, 'createLinkKashier'])->middleware(JwtMiddleware::class);
+    Route::get('payment/check-status/{transaction_id}', [CreateLinkPaymentController::class, 'checkStatus']);
 });
 
 
