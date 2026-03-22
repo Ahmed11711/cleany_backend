@@ -36,9 +36,14 @@ class LoginController extends Controller
         Auth::guard('api')->logout();
         return $this->successResponse('Successfully logged out');
     }
-
     public function me()
     {
-        return $this->successResponse(Auth::guard('api')->user());
+        $user = Auth::guard('api')->user();
+
+        $user->loadMissing('wallet');
+
+        $user->balance = $user->wallet ? $user->wallet->balance : 0;
+
+        return $this->successResponse($user);
     }
 }
