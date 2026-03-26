@@ -32,6 +32,8 @@ return new class extends Migration
             // pending: لسه مدفعش، confirmed: دفع، cancelled: اتلغى
             $table->string('status')->default('pending');
             $table->string('payment_status')->default('unpaid');
+            $table->string('address')->nullable();
+            $table->text('notes')->nullable();
             $table->timestamps();
         });
     }

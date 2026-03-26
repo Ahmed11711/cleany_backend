@@ -16,6 +16,8 @@ class CreateBookingRequest extends BaseRequest
             'booking_date' => 'required|date|after_or_equal:today',
             'start_time' => 'required',
             'hours' => 'required|integer|min:1',
+            'notes' => 'nullable|string',
+            'address' => 'required|string'
         ];
     }
 }

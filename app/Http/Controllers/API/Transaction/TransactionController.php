@@ -16,7 +16,7 @@ class TransactionController extends Controller
     {
         $userId = $request->user_id;
 
-        $transactions = booking::with('service')
+        $transactions = Transaction::with('service')
             ->where('user_id', $userId)
             ->get();
 
