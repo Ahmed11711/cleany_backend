@@ -5,7 +5,7 @@ use \App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Api\Comapny\BookingController;
 use App\Http\Controllers\Api\Offer\OfferController;
 use App\Http\Controllers\Api\Payment\createLinkPaymentController;
-use App\Http\Controllers\Api\Region\regionController;
+use App\Http\Controllers\Api\Region\RegionController;
 use App\Http\Middleware\JwtMiddleware;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\Comapny\CompanyController;
@@ -42,7 +42,7 @@ Route::prefix('v1/app')->name('app.')->group(function () {
     Route::post('create-link-payment', [createLinkPaymentController::class, 'createLinkKashier'])->middleware(JwtMiddleware::class);
     Route::get('payment/check-status/{transaction_id}', [CreateLinkPaymentController::class, 'checkStatus']);
     Route::get('offers', [OfferController::class, 'index']);
-    Route::get('regions', [regionController::class, 'index']);
+    Route::get('regions', [RegionController::class, 'index']);
 });
 
 // 

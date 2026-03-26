@@ -13,6 +13,7 @@ class RegionController extends Controller
 
     public function index()
     {
+        //git
         $regions = Region::get();
         return $this->successResponse($regions, "List Of Regions");
     }
