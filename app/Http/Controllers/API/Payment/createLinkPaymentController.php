@@ -9,7 +9,7 @@ use App\Traits\ApiResponseTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
-class createLinkPaymentController extends Controller
+class CreateLinkPaymentController extends Controller
 {
     use ApiResponseTrait;
     public function __construct(public CreateLinkKashierPaymentService $createLinkRepo) {}
