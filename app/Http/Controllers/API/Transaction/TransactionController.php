@@ -12,7 +12,7 @@ class TransactionController extends Controller
     use ApiResponseTrait;
     public function index(Request $request)
     {
-        $userId = $request->user_id;
+        return   $userId = $request->user_id;
         $transactions = Transaction::where('user_id', $userId)->get();
         return $this->successResponse($transactions, "My Transaction List");
     }
