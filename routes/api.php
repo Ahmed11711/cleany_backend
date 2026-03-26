@@ -38,6 +38,7 @@ Route::prefix('v1/app')->name('app.')->group(function () {
     Route::get('categories', [CategoryController::class, 'index']);
     Route::get('categories/{id}', [CategoryController::class, 'getCompaniesByCategory']);
     Route::get('companies/{id}', [CompanyController::class, 'show']);
+    Route::get('companies', [CompanyController::class, 'index']);
     Route::get('companies/{id}/available-slots', [CompanyController::class, 'getAvailableSlots']);
     Route::post('booking', [BookingController::class, 'store'])->middleware(JwtMiddleware::class);
     Route::get('booking', [BookingController::class, 'index'])->middleware(JwtMiddleware::class);

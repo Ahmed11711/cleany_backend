@@ -24,6 +24,15 @@ class CompanyController extends Controller
         );
     }
 
+    public function index()
+    {
+        $companies = Company::with(['services', 'specialties'])->limit(5)->get();
+        return $this->successResponse(
+            new ApiComapnyResource($companies),
+            'Company details retrieved successfully'
+        );
+    }
+
     public function getAvailableSlots($id)
     {
         $services = Service::with(['availabilities'])
