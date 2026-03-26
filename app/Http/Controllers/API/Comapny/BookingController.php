@@ -54,6 +54,8 @@ class BookingController extends Controller
             'discount_applied' => $service->discount,
             'total_price' => $totalPrice,
             'status' => 'pending',
+            'address'          => $data['address'], // سيأخذ القيمة من الـ Request
+            'notes'            => $data['notes'] ?? null,
         ]);
 
         return $this->successResponse($booking, 'Booking created successfully');

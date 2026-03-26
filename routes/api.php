@@ -5,7 +5,7 @@ use \App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\API\Comapny\BookingController;
 use App\Http\Controllers\API\Comapny\CompanyController;
 use App\Http\Controllers\API\Offer\OfferController;
-use App\Http\Controllers\API\Payment\createLinkPaymentController;
+use App\Http\Controllers\API\Payment\CreateLinkPaymentController;
 use App\Http\Controllers\API\Region\RegionController;
 use App\Http\Controllers\API\Transaction\TransactionController;
 use App\Http\Middleware\JwtMiddleware;
@@ -43,7 +43,7 @@ Route::prefix('v1/app')->name('app.')->group(function () {
     Route::post('booking', [BookingController::class, 'store'])->middleware(JwtMiddleware::class);
     Route::get('booking', [BookingController::class, 'index'])->middleware(JwtMiddleware::class);
     Route::get('booking/{id}', [BookingController::class, 'show'])->middleware(JwtMiddleware::class);
-    Route::post('create-link-payment', [createLinkPaymentController::class, 'createLinkKashier'])->middleware(JwtMiddleware::class);
+    Route::post('create-link-payment', [CreateLinkPaymentController::class, 'createLinkKashier'])->middleware(JwtMiddleware::class);
     Route::get('payment/check-status/{transaction_id}', [CreateLinkPaymentController::class, 'checkStatus']);
     Route::get('offers', [OfferController::class, 'index']);
     Route::get('regions', [RegionController::class, 'index']);
