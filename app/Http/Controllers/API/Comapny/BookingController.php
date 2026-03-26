@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\Comapny;
+namespace App\Http\Controllers\API\Comapny;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Booking\CreateBookingRequest;

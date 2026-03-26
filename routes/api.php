@@ -2,10 +2,10 @@
 
 use \App\Http\Controllers\API\Category\CategoryController;
 use \App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\Api\Comapny\BookingController;
-use App\Http\Controllers\Api\Offer\OfferController;
-use App\Http\Controllers\Api\Payment\createLinkPaymentController;
-use App\Http\Controllers\Api\Region\RegionController;
+use App\Http\Controllers\API\Comapny\BookingController;
+use App\Http\Controllers\API\Offer\OfferController;
+use App\Http\Controllers\API\Payment\createLinkPaymentController;
+use App\Http\Controllers\API\Region\RegionController;
 use App\Http\Middleware\JwtMiddleware;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\Comapny\CompanyController;
