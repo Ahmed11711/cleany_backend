@@ -32,7 +32,7 @@ Route::prefix('v1/app/auth')->group(function () {
     Route::post('logout', [LoginController::class, 'logout'])->middleware(JwtMiddleware::class);
     Route::get('me', [LoginController::class, 'me'])->middleware(JwtMiddleware::class);
 });
-// 
+
 
 Route::prefix('v1/app')->name('app.')->group(function () {
     Route::get('categories', [CategoryController::class, 'index']);
