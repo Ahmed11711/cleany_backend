@@ -28,7 +28,8 @@ class CompanyController extends Controller
     {
         $companies = Company::with(['services', 'specialties'])->limit(5)->get();
         return $this->successResponse(
-            new ApiComapnyResource($companies),
+
+            ApiComapnyResource::collection($companies),
             'Company details retrieved successfully'
         );
     }
