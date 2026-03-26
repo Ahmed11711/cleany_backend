@@ -45,6 +45,7 @@ Route::prefix('v1/app')->name('app.')->group(function () {
     Route::get('regions', [regionController::class, 'index']);
 });
 
+// 
 
 
 require __DIR__ . '/admin.php';
