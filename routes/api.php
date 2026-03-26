@@ -3,12 +3,14 @@
 use \App\Http\Controllers\API\Category\CategoryController;
 use \App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\API\Comapny\BookingController;
+use App\Http\Controllers\API\Comapny\CompanyController;
 use App\Http\Controllers\API\Offer\OfferController;
 use App\Http\Controllers\API\Payment\createLinkPaymentController;
 use App\Http\Controllers\API\Region\RegionController;
+use App\Http\Controllers\API\Transaction\TransactionController;
 use App\Http\Middleware\JwtMiddleware;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\API\Comapny\CompanyController;
+
 
 
 
@@ -43,6 +45,8 @@ Route::prefix('v1/app')->name('app.')->group(function () {
     Route::get('payment/check-status/{transaction_id}', [CreateLinkPaymentController::class, 'checkStatus']);
     Route::get('offers', [OfferController::class, 'index']);
     Route::get('regions', [RegionController::class, 'index']);
+    // for transaction
+    Route::get('transaction', [TransactionController::class, 'index']);
 });
 
 // 
