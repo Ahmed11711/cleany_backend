@@ -46,7 +46,7 @@ Route::prefix('v1/app')->name('app.')->group(function () {
     Route::get('offers', [OfferController::class, 'index']);
     Route::get('regions', [RegionController::class, 'index']);
     // for transaction
-    Route::get('transaction', [TransactionController::class, 'index']);
+    Route::get('transaction', [TransactionController::class, 'index'])->middleware(JwtMiddleware::class);
 });
 
 // 
