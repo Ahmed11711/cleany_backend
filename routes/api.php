@@ -41,6 +41,7 @@ Route::prefix('v1/app')->name('app.')->group(function () {
     Route::get('companies/{id}/available-slots', [CompanyController::class, 'getAvailableSlots']);
     Route::post('booking', [BookingController::class, 'store'])->middleware(JwtMiddleware::class);
     Route::get('booking', [BookingController::class, 'index'])->middleware(JwtMiddleware::class);
+    Route::get('booking/{id}', [BookingController::class, 'show'])->middleware(JwtMiddleware::class);
     Route::post('create-link-payment', [createLinkPaymentController::class, 'createLinkKashier'])->middleware(JwtMiddleware::class);
     Route::get('payment/check-status/{transaction_id}', [CreateLinkPaymentController::class, 'checkStatus']);
     Route::get('offers', [OfferController::class, 'index']);

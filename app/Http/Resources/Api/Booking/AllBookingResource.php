@@ -22,6 +22,12 @@ class AllBookingResource extends JsonResource
             'booking_date' => $this->booking_date,
             'start_time' => $this->start_time,
             'end_time' => $this->end_time,
+            'payment_status' => $this->payment_status,
+            'hours' => $this->hours,
+            'unit_price' => $this->unit_price,
+            'discount_applied' => $this->discount_applied,
+            'total_price' => $this->total_price,
+
 
             'created_at' => $this->created_at->format('d M Y'),
         ];

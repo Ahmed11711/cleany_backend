@@ -85,4 +85,17 @@ class BookingController extends Controller
 
         return $this->successResponse($data, "List Of Orders");
     }
+
+    public function show($id)
+    {
+        $order = booking::with('service')->find($id);
+
+        if (!$order) {
+            return $this->errorResponse("Order not found", 404);
+        }
+
+        $data = new AllBookingResource($order);
+
+        return $this->successResponse($data, "Booking details retrieved successfully");
+    }
 }
