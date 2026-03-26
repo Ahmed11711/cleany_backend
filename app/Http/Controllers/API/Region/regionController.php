@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Api\Region;
+namespace App\Http\Controllers\API\Region;
 
 use App\Http\Controllers\Controller;
 use App\Models\Region;
 use App\Traits\ApiResponseTrait;
 use Illuminate\Http\Request;
 
-class regionController extends Controller
+class RegionController extends Controller
 {
     use ApiResponseTrait;
 
