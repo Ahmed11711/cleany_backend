@@ -61,8 +61,25 @@ class BookingController extends Controller
 
     public function index(Request $request)
     {
-        $userId = $request->user_id;
-        $orders = booking::with('service')->where('user_id', $userId)->get();
-        return $this->successResponse(AllBookingResource::collection($orders), "List Of Orders");
+        $userId = $request->user_id; // أو auth()->id() للأمان
+
+        // 1. جلب الطلبات الحالية (Pending فقط)
+        $currentOrders = booking::with('service')
+            ->where('user_id', $userId)
+            ->where('status', 'pending') // تأكد من اسم العمود والحالة عندك
+            ->latest()->first();
+
+        // 2. جلب كل الطلبات (أو الطلبات المنتهية فقط حسب رغبتك)
+        $allOrders = booking::with('service')
+            ->where('user_id', $userId)
+            ->get();
+
+        // 3. تجميع البيانات في الرد
+        $data = [
+            'current_orders' => AllBookingResource::collection($currentOrders),
+            'all_orders'     => AllBookingResource::collection($allOrders),
+        ];
+
+        return $this->successResponse($data, "List Of Orders");
     }
 }

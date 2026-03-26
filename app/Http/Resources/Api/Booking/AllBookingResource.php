@@ -19,6 +19,10 @@ class AllBookingResource extends JsonResource
             'service_id' => $this->service_id,
             'service_name' => $this->service->service_name ?? null,
             'status' => $this->status,
+            'booking_date' => $this->booking_date,
+            'start_time' => $this->start_time,
+            'end_time' => $this->end_time,
+
             'created_at' => $this->created_at->format('d M Y'),
         ];
     }
