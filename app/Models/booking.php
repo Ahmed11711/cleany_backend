@@ -6,5 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class booking extends Model
 {
-    //
+    public function service()
+    {
+        return $this->belongsTo(Service::class,);
+    }
 }

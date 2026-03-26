@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API\Comapny;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Booking\CreateBookingRequest;
+use App\Http\Resources\Api\Booking\AllBookingResource;
 use App\Models\booking;
 use App\Models\Service;
 use App\Traits\ApiResponseTrait;
@@ -22,14 +23,12 @@ class BookingController extends Controller
         $bookingDate = Carbon::parse($request->booking_date);
         $isToday = $bookingDate->isToday();
 
-        // تحديد السعر (سعر اليوم لو متاح، وإلا السعر العادي)
         $unitPrice = ($isToday && $service->price_today) ? $service->price_today : $service->price;
 
         $subTotal = $unitPrice * $request->hours;
         $totalPrice = $subTotal - ($subTotal * ($service->discount / 100));
 
         // --- الحل هنا ---
-        // لو باعت 9، هنحولها لـ 09:00:00
         try {
             // لو الـ start_time مجرد رقم (ساعة)
             if (is_numeric($request->start_time)) {
@@ -63,7 +62,7 @@ class BookingController extends Controller
     public function index(Request $request)
     {
         $userId = $request->user_id;
-        $orders = booking::where('user_id', $userId)->get();
-        return $this->successResponse($orders, "List Of Orders");
+        $orders = booking::with('service')->where('user_id', $userId)->get();
+        return $this->successResponse(AllBookingResource::collection($orders), "List Of Orders");
     }
 }
