@@ -23,6 +23,8 @@ class ApiComapnyResource extends JsonResource
             'description' => $this->description,
             'rating' => $this->rating,
             'is_verified' => $this->is_verified,
+            'price' => $this->hourly_rate,
+            'free_delivery' => $this->free_delivery,
             'services' => ApiServiceResource::collection($this->whenLoaded('services')),
             'specialties' => SpecialtyResource::collection($this->whenLoaded('specialties')),
         ];
