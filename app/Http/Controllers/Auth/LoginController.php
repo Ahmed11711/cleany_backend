@@ -78,4 +78,31 @@ class LoginController extends Controller
             'user' => $user,
         ], 'Account created successfully');
     }
+
+    public function updateAccount(CreateAccountRequest $request)
+    {
+        $user = auth('api')->user();
+
+        $data = $request->validated();
+
+        if ($request->filled('password')) {
+            $data['password'] = bcrypt($request->password);
+        } else {
+            unset($data['password']);
+        }
+
+        $data['profile_photo'] = $this->uploadManager(
+            $request,
+            $data,
+            'Users',
+            ['profile_photo'],
+        );
+
+        $user->update($data);
+
+        $user->loadMissing('wallet');
+        $user->balance = $user->wallet ? $user->wallet->balance : 0;
+
+        return $this->successResponse($user, 'Account updated successfully');
+    }
 }
