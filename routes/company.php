@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\Comapny\Offers\OfferController;
-use App\Http\Controllers\Api\Company\DashboardCompanyController;
+use App\Http\Controllers\API\Company\DashboardCompanyController;
 use App\Http\Controllers\API\Company\Staff\DashboardStaffController;
 use App\Http\Controllers\Company\Auth\AuthController;
 use App\Http\Controllers\Company\Availability\AvailabilityController;
@@ -9,6 +9,7 @@ use App\Http\Controllers\Company\Booking\BookingController;
 use App\Http\Controllers\Company\Dashboard\MyCompnayController;
 use App\Http\Controllers\Company\Service\ServiceController;
 use App\Http\Controllers\Company\Staff\StaffController;
+use App\Http\Middleware\CheckIsCompany;
 use App\Http\Middleware\JwtMiddleware;
 use Illuminate\Support\Facades\Route;
 
@@ -19,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 
 
 
-Route::prefix('v1/company/')->middleware(JwtMiddleware::class)->group(function () {
+Route::prefix('v1/company/')->middleware(CheckIsCompany::class)->group(function () {
     // login
 
 

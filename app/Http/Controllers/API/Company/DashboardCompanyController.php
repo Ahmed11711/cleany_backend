@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\Company;
+namespace App\Http\Controllers\API\Company;
 
 use App\Http\Controllers\Controller;
 use App\Models\booking;
