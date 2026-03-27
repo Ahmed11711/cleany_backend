@@ -62,12 +62,10 @@ class LoginController extends Controller
 
         $data['password'] = bcrypt($request->password);
 
-        $data = $this->uploadManager(
-            $request,
-            $data,
-            'Users',
-            ['profile_photo']
-        );
+
+
+        $data['profile_photo'] = $this->uploadManager($request, $data, 'Users', ['profile_photo']);
+
 
         $user = User::create($data);
 

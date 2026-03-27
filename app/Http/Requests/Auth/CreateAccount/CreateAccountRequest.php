@@ -23,7 +23,7 @@ class CreateAccountRequest extends BaseRequest
 
 
 
-            'profile_photo' => 'nullable|image|mimes:jpeg,png,jpg|max:2048', // 2MB كحد أقصى
+            'profile_photo' => 'nullable|image|mimes:jpeg,png,jpg', // 2MB كحد أقصى
         ];
     }
 
