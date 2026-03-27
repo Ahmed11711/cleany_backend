@@ -33,7 +33,6 @@ class CreateLinkPaymentController extends Controller
     }
     public function success(Request $request)
     {
-        Log::info("sss", [$request]);
         $data = $request->all();
         $transactionId = $data['merchantOrderId'] ?? null;
 

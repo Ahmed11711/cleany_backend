@@ -28,13 +28,16 @@ return new class extends Migration
 
             $table->enum('status', ['pending', 'confirmed', 'completed', 'cancelled'])
                 ->default('pending');
+
             $table->enum('payment_status', ['unpaid', 'paid', 'cash_on_hand'])
-                ->default('unpaid')
-                ->change();
+                ->default('unpaid');
+
+
             $table->enum('payment_method', ['wallet', 'cash_on_hand', 'payment'])->nullable();
             $table->string('address')->nullable();
             $table->text('notes')->nullable();
             $table->integer('staff_id')->nullable();
+            $table->string('transaction_id')->nullable();
             $table->timestamps();
         });
     }

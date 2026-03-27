@@ -10,6 +10,7 @@ use App\Models\Service;
 use App\Traits\ApiResponseTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Str;
 
 class BookingController extends Controller
 {
@@ -56,6 +57,7 @@ class BookingController extends Controller
             'status' => 'pending',
             'address'          => $data['address'], // سيأخذ القيمة من الـ Request
             'notes'            => $data['notes'] ?? null,
+            'transaction_id'    => 'TRX-' . strtoupper(Str::random(10)),
         ]);
 
         return $this->successResponse($booking, 'Booking created successfully');

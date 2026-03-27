@@ -3,26 +3,27 @@
 namespace App\Http\Requests\Api\Checkout;
 
 use App\Http\Requests\BaseRequest\BaseRequest;
-use Illuminate\Contracts\Validation\ValidationRule;
-use Illuminate\Foundation\Http\FormRequest;
 
 class CheckoutRequest extends BaseRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
-
-
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, ValidationRule|array<mixed>|string>
-     */
     public function rules(): array
     {
         return [
             'booking_id'     => 'required|exists:bookings,id',
             'payment_method' => 'required|in:wallet,payment,cash_on_hand',
+        ];
+    }
+
+    /**
+     * Custom messages for validation errors.
+     */
+    public function messages(): array
+    {
+        return [
+            'booking_id.required' => 'The booking ID is mandatory to proceed.',
+            'booking_id.exists'   => 'The selected booking does not exist in our records.',
+            'payment_method.required' => 'Please select a payment method.',
+            'payment_method.in'       => 'The payment method must be one of: wallet, payment, or cash_on_hand.',
         ];
     }
 }
