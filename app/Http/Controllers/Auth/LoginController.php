@@ -65,6 +65,7 @@ class LoginController extends Controller
 
 
         $data['profile_photo'] = $this->uploadManager($request, $data, 'Users', ['profile_photo']);
+        $data['role'] = 'user';
 
 
         $user = User::create($data);
