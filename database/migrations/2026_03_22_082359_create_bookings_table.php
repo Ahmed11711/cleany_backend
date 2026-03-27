@@ -31,6 +31,7 @@ return new class extends Migration
             $table->enum('payment_status', ['unpaid', 'paid', 'cash_on_hand'])
                 ->default('unpaid')
                 ->change();
+            $table->enum('payment_method', ['wallet', 'cash_on_hand', 'payment'])->nullable();
             $table->string('address')->nullable();
             $table->text('notes')->nullable();
             $table->integer('staff_id')->nullable();
