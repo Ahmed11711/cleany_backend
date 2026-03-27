@@ -4,15 +4,17 @@ namespace App\Http\Requests\Auth\CreateAccount;
 
 use App\Http\Requests\BaseRequest\BaseRequest;
 use Illuminate\Validation\Rules\Password;
+use Illuminate\Validation\Rule;
 
 class UpdateAccountRequest extends BaseRequest
 {
     public function rules(): array
     {
+        $userId = $this->route('id') ?? auth('api')->id();
         return [
             'name'     => 'nullable|string|max:255',
 
-            'email' => 'nullable|email|unique:users,email,' . auth('api')->id(),
+            Rule::unique('users', 'email')->ignore($userId),
             'phone'    => 'nullable|string|max:20',
 
             'password' => [
