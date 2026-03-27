@@ -92,7 +92,7 @@ class BookingController extends Controller
 
     public function show($id)
     {
-        $order = booking::with('service')->find($id);
+        $order = booking::with(['service'])->find($id);
 
         if (!$order) {
             return $this->errorResponse("Order not found", 404);
