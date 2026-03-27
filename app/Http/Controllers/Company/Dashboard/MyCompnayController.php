@@ -39,15 +39,19 @@ class MyCompnayController extends Controller
     public function update(UpdateCompanyRequest $request)
     {
         $data = $request->validated();
-        $company = $this->companyRepo->findBYKey('admin_id', $request->user_id);
-        if (!$company) {
-            return $this->errorResponse('Company not found', 404);
+
+        // تأكد من تحويل free_delivery لـ integer إذا كان جاي نص من الـ FormData
+        if ($request->has('free_delivery')) {
+            $data['free_delivery'] = filter_var($request->free_delivery, FILTER_VALIDATE_BOOLEAN) ? 1 : 0;
         }
-        $data['logo'] = $this->uploadManager($request, $data, 'Company', ['logo'], $company);
 
+        $company = $this->companyRepo->findBYKey('admin_id', $request->user_id);
 
+        if ($request->hasFile('logo')) {
+            $data['logo'] = $this->uploadManager($request, $data, 'Company', ['logo'], $company);
+        }
 
         $company->update($data);
-        return $this->successResponse($company, 'Company updated successfully');
+        return $this->successResponse($company->refresh(), 'Company updated successfully');
     }
 }

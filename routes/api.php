@@ -55,3 +55,4 @@ Route::prefix('v1/app')->name('app.')->group(function () {
 
 
 require __DIR__ . '/admin.php';
+require __DIR__ . '/company.php';

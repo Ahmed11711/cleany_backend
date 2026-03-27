@@ -18,22 +18,22 @@ return new class extends Migration
             $table->foreignId('service_id')->constrained()->onDelete('cascade');
 
             // تفاصيل الموعد
-            $table->date('booking_date'); // التاريخ اللي اختاره
-            $table->time('start_time');   // وقت البداية
-            $table->integer('hours')->default(1); // عدد الساعات اللي زودها العميل
-            $table->time('end_time');     // وقت النهاية (بيتحسب Start + Hours)
+            $table->date('booking_date');
+            $table->time('start_time');
+            $table->integer('hours')->default(1);
+            $table->time('end_time');
+            $table->decimal('unit_price', 8, 2);
+            $table->integer('discount_applied')->default(0);
+            $table->decimal('total_price', 8, 2);
 
-            // تفاصيل السعر (مهم جداً نخزنها كأرقام وقت الحجز)
-            $table->decimal('unit_price', 8, 2);  // سعر الساعة وقت الحجز (سواء عادي أو سعر اليوم)
-            $table->integer('discount_applied')->default(0); // الخصم اللي كان موجود وقتها
-            $table->decimal('total_price', 8, 2); // الإجمالي النهائي بعد الحساب
-
-            // الحالة (Status)
-            // pending: لسه مدفعش، confirmed: دفع، cancelled: اتلغى
-            $table->string('status')->default('pending');
-            $table->string('payment_status')->default('unpaid');
+            $table->enum('status', ['pending', 'confirmed', 'completed', 'cancelled'])
+                ->default('pending');
+            $table->enum('payment_status', ['unpaid', 'paid', 'cash_on_hand'])
+                ->default('unpaid')
+                ->change();
             $table->string('address')->nullable();
             $table->text('notes')->nullable();
+            $table->integer('staff_id')->nullable();
             $table->timestamps();
         });
     }

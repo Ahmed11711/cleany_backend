@@ -1,0 +1,22 @@
+<?php
+
+namespace App\Http\Requests\Company\Service;
+
+use App\Http\Requests\BaseRequest\BaseRequest;
+use Illuminate\Contracts\Validation\ValidationRule;
+use Illuminate\Foundation\Http\FormRequest;
+
+class UpdateServiceRequest extends BaseRequest
+{
+
+    public function rules(): array
+    {
+        return [
+            'service_name' => 'nullable|string',
+            'price'        => 'nullable|numeric',
+            'price_today'  => 'nullable|numeric',
+            'discount'     => 'integer',
+            'standard_bags' => 'nullable|string'
+        ];
+    }
+}

@@ -27,11 +27,18 @@ class JwtMiddleware
                 return $this->errorResponse('User not found', 404);
             }
 
-            // 2. Inject user data into the request for easy access in controllers
+            $companyId = null;
+
+            if ($user->role === 'company') {
+                $companyId = $user->Comapny ? $user->Comapny->id : null;
+            } elseif ($user->role === 'staff') {
+                $companyId = $user->company_id;
+            }
+
             $request->merge([
-                'user_id' => $user->id,
-                'user_email' => $user->email,
-                'user_role' => $user->role,
+                'user_id'    => $user->id,
+                'user_role'  => $user->role,
+                'company_id' => $companyId,
             ]);
         } catch (Exception $e) {
             if ($e instanceof TokenInvalidException) {

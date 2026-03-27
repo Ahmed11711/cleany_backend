@@ -18,6 +18,8 @@ class StoreCompanyRequest extends BaseRequest
             'address' => 'nullable|string|max:255',
             'phone' => 'nullable|string|max:255',
             'description' => 'required|string',
+            'hourly_rate' => 'required'
+
         ];
     }
 }

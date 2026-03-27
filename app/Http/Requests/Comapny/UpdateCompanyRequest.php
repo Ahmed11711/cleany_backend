@@ -17,6 +17,7 @@ class UpdateCompanyRequest extends BaseRequest
             'address' => 'nullable|string|max:255',
             'phone' => 'nullable|string|max:255',
             'description' => 'nullable|string',
+            'hourly_rate' => 'nullable'
         ];
     }
 }

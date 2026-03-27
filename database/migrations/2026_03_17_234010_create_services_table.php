@@ -19,6 +19,7 @@ return new class extends Migration
             $table->decimal('price_today', 8, 2)->nullable();
             // discount
             $table->integer('discount')->default(0); // 10%
+            $table->text('standard_bags')->nullable();
             $table->timestamps();
         });
     }
