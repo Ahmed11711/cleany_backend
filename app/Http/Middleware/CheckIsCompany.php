@@ -33,7 +33,7 @@ class CheckIsCompany
             $companyId = null;
 
             if ($user->role === 'company') {
-                $companyId = $user->company ? $user->company->id : null;
+                $companyId = $user->Comapny ? $user->Comapny->id : null;
             } elseif ($user->role === 'staff') {
                 $companyId = $user->company_id;
             }

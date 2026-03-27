@@ -60,6 +60,6 @@ Route::prefix('v1/company/')->middleware(CheckIsCompany::class)->group(function 
 
 Route::prefix('v1/company/auth')->group(function () {
     Route::post('login', [AuthController::class, 'login']);
-    Route::post('logout', [AuthController::class, 'logout'])->middleware(JwtMiddleware::class);
-    Route::get('me', [AuthController::class, 'me'])->middleware(JwtMiddleware::class);
+    Route::post('logout', [AuthController::class, 'logout'])->middleware(CheckIsCompany::class);
+    Route::get('me', [AuthController::class, 'me'])->middleware(CheckIsCompany::class);
 });
