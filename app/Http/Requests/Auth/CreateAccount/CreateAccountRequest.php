@@ -18,10 +18,7 @@ class CreateAccountRequest extends BaseRequest
 
             'password' => [
                 'required',
-                Password::min(8)
-                    ->letters()
-                    ->numbers()
-                    ->mixedCase()
+                Password::min(8),
             ],
 
 
