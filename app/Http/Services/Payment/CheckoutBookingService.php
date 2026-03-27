@@ -25,7 +25,7 @@ class CheckoutBookingService
             'currency'           => 'EGP',
             'order'              => $transactionId,
             'merchantId'         => 'MID-41016-213',
-            'merchantRedirect' => config('app.url') . '/kashier/success/checkout?transaction_id=' . $transactionId,
+            'merchantRedirect' => config('app.url') . 'kashier/success/checkout?transaction_id=' . $transactionId,
             'failureRedirect'    => true,
             'serverWebhook'      => config('app.url') . '/kashier/webhook',
             'allowedMethods'     => 'card,wallet',
