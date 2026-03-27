@@ -24,8 +24,14 @@ class LoginController extends Controller
 
     protected function respondWithToken($token)
     {
+        $user = Auth::guard('api')->user();
+
+        $user->loadMissing('wallet');
+
+        $user->balance = $user->wallet ? $user->wallet->balance : 0;
+
         return response()->json([
-            'user' => Auth::guard('api')->user(),
+            'user' => $user,
             'access_token' => $token,
             'token_type' => 'bearer',
         ]);
