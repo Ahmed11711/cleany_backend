@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\CreateAccount\CreateAccountRequest;
+use App\Http\Requests\Auth\CreateAccount\UpdateAccountRequest;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Models\User;
 use App\Traits\ApiResponseTrait;
@@ -79,7 +80,7 @@ class LoginController extends Controller
         ], 'Account created successfully');
     }
 
-    public function updateAccount(CreateAccountRequest $request)
+    public function updateAccount(UpdateAccountRequest $request)
     {
         $user = auth('api')->user();
 
