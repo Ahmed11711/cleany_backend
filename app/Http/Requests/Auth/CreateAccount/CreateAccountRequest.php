@@ -14,11 +14,10 @@ class CreateAccountRequest extends BaseRequest
 
             'email'    => 'required|string|email|max:255|unique:users,email',
 
-            'phone'    => 'nullable|string|max:20|unique:users,phone',
+            'phone'    => 'required|string|max:20|unique:users,phone',
 
             'password' => [
                 'required',
-                'confirmed', // يطلب وجود حقل password_confirmation
                 Password::min(8)
                     ->letters()
                     ->numbers()
