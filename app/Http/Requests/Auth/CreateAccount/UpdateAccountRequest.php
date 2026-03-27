@@ -13,7 +13,7 @@ class UpdateAccountRequest extends BaseRequest
             'name'     => 'nullable|string|max:255',
 
             'email' => 'nullable|email|unique:users,email,' . auth('api')->id(),
-            'phone'    => 'nullable|string|max:20|unique:users,phone',
+            'phone'    => 'nullable|string|max:20',
 
             'password' => [
                 'nullable',

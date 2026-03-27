@@ -13,7 +13,7 @@ class CreateAccountRequest extends BaseRequest
             'name'     => 'required|string|max:255',
 
             'email' => 'required|email|unique:users,email,' . auth('api')->id(),
-            'phone'    => 'required|string|max:20|unique:users,phone',
+            'phone'    => 'required|string|max:20',
 
             'password' => [
                 'required',
