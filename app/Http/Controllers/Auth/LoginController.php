@@ -3,14 +3,17 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Auth\CreateAccount\CreateAccountRequest;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Models\User;
 use App\Traits\ApiResponseTrait;
+use App\Traits\UploadImageTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
-    use ApiResponseTrait;
+    use ApiResponseTrait, UploadImageTrait;
     public function login(LoginRequest $request)
     {
         $credentials = $request->only('email', 'password');
@@ -51,5 +54,29 @@ class LoginController extends Controller
         $user->balance = $user->wallet ? $user->wallet->balance : 0;
 
         return $this->successResponse($user);
+    }
+
+    public function createAccount(CreateAccountRequest $request)
+    {
+        $data = $request->validated();
+
+        $data['password'] = bcrypt($request->password);
+
+        $data = $this->uploadManager(
+            $request,
+            $data,
+            'Users',
+            ['profile_photo']
+        );
+
+        $user = User::create($data);
+
+        if (method_exists($user, 'wallet')) {
+            $user->wallet()->create(['balance' => 0]);
+        }
+
+        return $this->successResponse([
+            'user' => $user,
+        ], 'Account created successfully');
     }
 }

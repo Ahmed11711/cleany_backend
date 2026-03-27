@@ -31,6 +31,8 @@ Route::get('test22', function () {
 });
 Route::prefix('v1/app/auth')->group(function () {
     Route::post('login', [LoginController::class, 'login']);
+    Route::post('create-account', [LoginController::class, 'createAccount']);
+
     Route::post('logout', [LoginController::class, 'logout'])->middleware(JwtMiddleware::class);
     Route::get('me', [LoginController::class, 'me'])->middleware(JwtMiddleware::class);
 });
