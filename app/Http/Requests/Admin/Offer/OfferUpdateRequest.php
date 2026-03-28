@@ -16,8 +16,8 @@ class OfferUpdateRequest extends BaseRequest
             'description' => 'nullable|sometimes|string',
             'is_active' => 'sometimes|required|integer',
             'image_path' => 'nullable|sometimes|string|max:255|file|max:2048',
-            'company_id' => 'sometimes|required|integer|exists:companies,id',
-            'category_id' => 'sometimes|required|integer|exists:categories,id',
+            'company_id' => 'nullable|sometimes|integer|exists:companies,id',
+            'category_id' => 'nullable|sometimes|integer|exists:categories,id',
         ];
     }
 }

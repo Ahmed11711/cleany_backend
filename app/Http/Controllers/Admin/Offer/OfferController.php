@@ -16,9 +16,11 @@ class OfferController extends BaseController
 
         $this->initService(
             repository: $repository,
-            collectionName: 'Offer'
+            collectionName: 'Offer',
+            fileFields: ['image_path']
         );
 
+        $this->withRelationships = ['category', 'category'];
         $this->storeRequestClass = OfferStoreRequest::class;
         $this->updateRequestClass = OfferUpdateRequest::class;
         $this->resourceClass = OfferResource::class;

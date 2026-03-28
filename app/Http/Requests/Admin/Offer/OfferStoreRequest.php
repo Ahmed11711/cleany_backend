@@ -16,8 +16,8 @@ class OfferStoreRequest extends BaseRequest
             'description' => 'nullable|string',
             'is_active' => 'required|integer',
             'image_path' => 'nullable|string|max:255|file|max:2048',
-            'company_id' => 'required|integer|exists:companies,id',
-            'category_id' => 'required|integer|exists:categories,id',
+            'company_id' => 'nullable|integer|exists:companies,id',
+            'category_id' => 'nullable|integer|exists:categories,id',
         ];
     }
 }
