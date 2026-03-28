@@ -20,7 +20,7 @@ class OfferController extends BaseController
             fileFields: ['image_path']
         );
 
-        $this->withRelationships = ['category', 'category'];
+        $this->withRelationships = ['category', 'company'];
         $this->storeRequestClass = OfferStoreRequest::class;
         $this->updateRequestClass = OfferUpdateRequest::class;
         $this->resourceClass = OfferResource::class;
