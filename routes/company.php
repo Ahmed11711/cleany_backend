@@ -3,6 +3,7 @@
 use App\Http\Controllers\API\Comapny\Offers\OfferController;
 use App\Http\Controllers\API\Company\DashboardCompanyController;
 use App\Http\Controllers\API\Company\Staff\DashboardStaffController;
+use App\Http\Controllers\Api\Tracking\StaffTrackingController;
 use App\Http\Controllers\Company\Auth\AuthController;
 use App\Http\Controllers\Company\Availability\AvailabilityController;
 use App\Http\Controllers\Company\Booking\BookingController;
@@ -12,6 +13,7 @@ use App\Http\Controllers\Company\Staff\StaffController;
 use App\Http\Middleware\CheckIsCompany;
 use App\Http\Middleware\JwtMiddleware;
 use Illuminate\Support\Facades\Route;
+
 
 
 
@@ -55,6 +57,14 @@ Route::prefix('v1/company/')->middleware(CheckIsCompany::class)->group(function 
 
         // تحديث الموقع الجغرافي (GPS)
         Route::post('/update-location', [DashboardStaffController::class, 'updateLocation']);
+    });
+
+
+    Route::prefix('tracking')->group(function () {
+
+        Route::post('/update', [StaffTrackingController::class, 'update']);
+
+        Route::get('/staff/{id}', [StaffTrackingController::class, 'show']);
     });
 });
 

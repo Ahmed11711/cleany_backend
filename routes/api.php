@@ -8,9 +8,11 @@ use App\Http\Controllers\API\Company\Checkout\CheckoutController;
 use App\Http\Controllers\API\Offer\OfferController;
 use App\Http\Controllers\API\Payment\CreateLinkPaymentController;
 use App\Http\Controllers\API\Region\RegionController;
+use App\Http\Controllers\Api\Tracking\StaffTrackingController;
 use App\Http\Controllers\API\Transaction\TransactionController;
 use App\Http\Middleware\JwtMiddleware;
 use Illuminate\Support\Facades\Route;
+
 
 
 
@@ -58,6 +60,15 @@ Route::prefix('v1/app')->name('app.')->group(function () {
     Route::get('regions', [RegionController::class, 'index']);
     // for transaction
     Route::get('transaction', [TransactionController::class, 'index'])->middleware(JwtMiddleware::class);
+
+    // tracking
+
+    Route::prefix('tracking')->group(function () {
+
+        Route::post('/update', [StaffTrackingController::class, 'update']);
+
+        Route::get('/staff/{id}', [StaffTrackingController::class, 'show']);
+    });
 });
 
 // 
