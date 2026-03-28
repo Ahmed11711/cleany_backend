@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\Tracking;
 
 use App\Http\Controllers\Controller;
 use App\Http\Services\Tracking\TrackingService;
+use App\Models\booking;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -44,21 +45,30 @@ class StaffTrackingController extends Controller
      */
     public function show($id)
     {
-        $location = $this->trackingService->getStaffLocation($id);
+        $booking = booking::find($id);
+
+        if (!$booking) {
+            return response()->json(['message' => 'Booking not found'], 404);
+        }
+
+        $location = $this->trackingService->getStaffLocation($booking->staff_id);
+
+
 
         if (!$location) {
             return response()->json([
-                'status' => 'offline',
-                'lat' => null,
-                'lng' => null
-            ], 200); // رجع 200 عشان الـ React ميفضلش يصرخ Errors
+                'tracking_status' => 'offline',
+                'lat' => 30.0444, // إحداثيات القاهرة (Dummy Data) للتيست لو حابب
+                'lng' => 31.2357,
+                'note' => 'Showing default location for testing'
+            ]);
         }
 
-        // رجع الـ location مباشرة عشان الـ React يقرأها بسهولة
+        // لو اللوكيشن موجود
         return response()->json([
             'lat' => $location['lat'],
             'lng' => $location['lng'],
-            'status' => 'online'
+            'tracking_status' => 'online'
         ]);
     }
 }

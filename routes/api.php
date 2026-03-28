@@ -62,8 +62,12 @@ Route::prefix('v1/app')->name('app.')->group(function () {
     Route::get('transaction', [TransactionController::class, 'index'])->middleware(JwtMiddleware::class);
 
     // tracking
+    Route::get('/tracking/{id}', [StaffTrackingController::class, 'show'])->middleware(JwtMiddleware::class);
 
+    Route::prefix('tracking')->group(function () {
 
+        Route::post('/update', [StaffTrackingController::class, 'update']);
+    });
 });
 
 // 
