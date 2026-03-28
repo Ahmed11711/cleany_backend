@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Repositories\booking\bookingRepositoryInterface;
+use App\Repositories\booking\bookingRepository;
+
 use App\Repositories\Offer\OfferRepositoryInterface;
 use App\Repositories\Offer\OfferRepository;
 
@@ -47,6 +50,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(CategoryCompanyRepositoryInterface::class, CategoryCompanyRepository::class);
         $this->app->bind(TransactionRepositoryInterface::class, TransactionRepository::class);
         $this->app->bind(OfferRepositoryInterface::class, OfferRepository::class);
+        $this->app->bind(bookingRepositoryInterface::class, bookingRepository::class);
 }
 
     /**
