@@ -18,6 +18,7 @@ class TransactionController extends BaseController
             repository: $repository,
             collectionName: 'Transaction'
         );
+        $this->withRelationships = ['user'];
 
         $this->storeRequestClass = TransactionStoreRequest::class;
         $this->updateRequestClass = TransactionUpdateRequest::class;

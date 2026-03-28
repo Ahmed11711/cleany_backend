@@ -11,6 +11,9 @@ class TransactionResource extends JsonResource
         return [
             'id' => $this->id,
             'user_id' => $this->user_id,
+            'user_name' => $this->whenLoaded('user', function () {
+                return $this->user->name;
+            }),
             'transaction_id' => $this->transaction_id,
             'order_id' => $this->order_id,
             'amount' => $this->amount,
