@@ -20,7 +20,6 @@ class StaffTrackingController extends Controller
     public function update(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'user_id' => 'required|integer', // ضفت دي عشان الأمان
             'lat' => 'required|numeric',
             'lng' => 'required|numeric',
         ]);
@@ -50,13 +49,16 @@ class StaffTrackingController extends Controller
         if (!$location) {
             return response()->json([
                 'status' => 'offline',
-                'message' => 'Staff is not active or tracking expired'
-            ], 404);
+                'lat' => null,
+                'lng' => null
+            ], 200); // رجع 200 عشان الـ React ميفضلش يصرخ Errors
         }
 
+        // رجع الـ location مباشرة عشان الـ React يقرأها بسهولة
         return response()->json([
-            'status' => 'online',
-            'data' => $location
+            'lat' => $location['lat'],
+            'lng' => $location['lng'],
+            'status' => 'online'
         ]);
     }
 }

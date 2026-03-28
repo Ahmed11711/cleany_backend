@@ -23,6 +23,8 @@ Route::prefix('v1/admin')->group(function () {
     Route::apiResource('companies', CompanyController::class)->names('company');
     Route::apiResource('specialties', SpecialtyController::class)->names('specialty');
     Route::apiResource('category_companies', CategoryCompanyController::class)->names('category_company');
+    Route::apiResource('offers', OfferController::class)->names('offer');
+    Route::apiResource('transactions', TransactionController::class)->names('transaction');
 });
 
 

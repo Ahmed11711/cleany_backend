@@ -26,7 +26,7 @@ return new class extends Migration
             $table->integer('discount_applied')->default(0);
             $table->decimal('total_price', 8, 2);
 
-            $table->enum('status', ['pending', 'confirmed', 'completed', 'cancelled'])
+            $table->enum('status', ['pending', 'confirmed', 'completed', 'cancelled', 'on_the_way', 'in_progress'])
                 ->default('pending');
 
             $table->enum('payment_status', ['unpaid', 'paid', 'cash_on_hand'])
