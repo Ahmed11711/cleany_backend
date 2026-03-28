@@ -51,7 +51,8 @@ class StaffTrackingController extends Controller
             return response()->json(['message' => 'Booking not found'], 404);
         }
 
-        $location = $this->trackingService->getStaffLocation($booking->staff_id);
+
+        $location = $this->trackingService->getStaffLocation($booking->staff_id ?? 1);
 
 
 
