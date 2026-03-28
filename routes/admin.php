@@ -30,6 +30,6 @@ Route::prefix('v1/admin')->group(function () {
 
 
 Route::prefix('v1')->group(function () {
-    Route::apiResource('transactions', TransactionController::class)->names('transaction');
-    Route::apiResource('offers', OfferController::class)->names('offer');
+    // Route::apiResource('transactions', TransactionController::class)->names('transaction');
+    // Route::apiResource('offers', OfferController::class)->names('offer');
 });
