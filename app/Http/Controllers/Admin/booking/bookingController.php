@@ -19,6 +19,8 @@ class bookingController extends BaseController
             collectionName: 'booking'
         );
 
+        $this->withRelationships = ['user', 'company', 'staff', 'service'];
+
         $this->storeRequestClass = bookingStoreRequest::class;
         $this->updateRequestClass = bookingUpdateRequest::class;
         $this->resourceClass = bookingResource::class;
