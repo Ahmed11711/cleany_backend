@@ -16,11 +16,11 @@ class OfferResource extends JsonResource
             'image_path' => $this->image_path,
             'company_id' => $this->company_id,
             'company_name' => $this->whenLoaded('company', function () {
-                return $this->company->name;
+                return $this->company?->name;
             }),
             'category_id' => $this->category_id,
             'category_name' => $this->whenLoaded('category', function () {
-                return $this->category->name;
+                return $this->category?->name;
             }),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
