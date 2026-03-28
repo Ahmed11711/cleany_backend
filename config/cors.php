@@ -8,11 +8,20 @@ return [
     |--------------------------------------------------------------------------
     */
 
-    'paths' => ['api/*', 'sanctum/csrf-cookie'],
+    // دمجنا كل المسارات في مصفوفة واحدة، وضفنا tracking/* عشان الـ Redis
+    'paths' => [
+        'api/*',
+        'tracking/*',
+        'storage/*',
+        'sanctum/csrf-cookie'
+    ],
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['*'],
+    'allowed_origins' => [
+        'http://localhost:3000',
+        'http://127.0.0.1:3000'
+    ],
 
     'allowed_origins_patterns' => [],
 
@@ -22,7 +31,7 @@ return [
 
     'max_age' => 0,
 
-    'supports_credentials' => false,
-    'paths' => ['api/*', 'storage/*', 'sanctum/csrf-cookie'],
+    // لو بتستخدم Sanctum (Tokens/Cookies) خلي دي true
+    'supports_credentials' => true,
 
 ];

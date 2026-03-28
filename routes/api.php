@@ -63,12 +63,7 @@ Route::prefix('v1/app')->name('app.')->group(function () {
 
     // tracking
 
-    Route::prefix('tracking')->group(function () {
 
-        Route::post('/update', [StaffTrackingController::class, 'update']);
-
-        Route::get('/staff/{id}', [StaffTrackingController::class, 'show']);
-    });
 });
 
 // 
