@@ -8,7 +8,7 @@ use App\Http\Controllers\API\Company\Checkout\CheckoutController;
 use App\Http\Controllers\API\Offer\OfferController;
 use App\Http\Controllers\API\Payment\CreateLinkPaymentController;
 use App\Http\Controllers\API\Region\RegionController;
-use App\Http\Controllers\Api\Tracking\StaffTrackingController;
+use App\Http\Controllers\API\Tracking\StaffTrackingController;
 use App\Http\Controllers\API\Transaction\TransactionController;
 use App\Http\Middleware\JwtMiddleware;
 use Illuminate\Support\Facades\Route;

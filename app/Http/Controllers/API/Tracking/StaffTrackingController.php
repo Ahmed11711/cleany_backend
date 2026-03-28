@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\Tracking;
+namespace App\Http\Controllers\API\Tracking;
 
 use App\Http\Controllers\Controller;
 use App\Http\Services\Tracking\TrackingService;
