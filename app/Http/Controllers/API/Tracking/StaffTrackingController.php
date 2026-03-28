@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api\Tracking;
 
 use App\Http\Controllers\Controller;
-use App\Services\Tracking\TrackingService;
+use App\Http\Services\Tracking\TrackingService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 

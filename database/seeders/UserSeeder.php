@@ -45,7 +45,7 @@ class UserSeeder extends Seeder
             'name' => 'Mostafa User',
             'email' => 'mostafa@gmail.com',
             'password' => Hash::make('password'),
-            'role' => 'user',
+            'role' => 'company',
             'is_active' => true,
         ]);
     }

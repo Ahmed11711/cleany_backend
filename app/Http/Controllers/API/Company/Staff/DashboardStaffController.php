@@ -27,7 +27,7 @@ class DashboardStaffController extends Controller
             'status' => 'required|in:on_the_way,in_progress'
         ]);
 
-        $booking = Booking::where('staff_id', $request->user_id)->findOrFail($id);
+        $booking = booking::where('staff_id', $request->user_id)->findOrFail($id);
         $booking->update(['status' => $request->status]);
 
         return response()->json(['message' => 'Status updated successfully', 'booking' => $booking]);

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Tracking;
+namespace App\Http\Services\Tracking;
 
 use Illuminate\Support\Facades\Redis;
 
