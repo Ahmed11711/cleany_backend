@@ -6,11 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\CreateAccount\CreateAccountRequest;
 use App\Http\Requests\Auth\CreateAccount\UpdateAccountRequest;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Http\Requests\Auth\UpdatePasswordRequest;
 use App\Models\User;
 use App\Traits\ApiResponseTrait;
 use App\Traits\UploadImageTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class LoginController extends Controller
 {
@@ -105,5 +107,23 @@ class LoginController extends Controller
         $user->balance = $user->wallet ? $user->wallet->balance : 0;
 
         return $this->successResponse($user, 'Account updated successfully');
+    }
+
+    public function updatePassword(UpdatePasswordRequest $request)
+    {
+        /** @var \App\Models\User $user */
+        $user = auth('api')->user();
+
+        // 1. Verify if the current password matches the database record
+        if (!Hash::check($request->old_password, $user->password)) {
+            return $this->errorResponse('The current password you entered is incorrect.', 400);
+        }
+
+        // 2. Update and encrypt the new password
+        $user->update([
+            'password' => Hash::make($request->password)
+        ]);
+
+        return $this->successResponse(null, 'Password updated successfully.');
     }
 }

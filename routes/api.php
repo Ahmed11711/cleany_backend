@@ -35,6 +35,7 @@ Route::prefix('v1/app/auth')->group(function () {
     Route::post('login', [LoginController::class, 'login']);
     Route::post('create-account', [LoginController::class, 'createAccount']);
     Route::post('update-account', [LoginController::class, 'updateAccount'])->middleware(JwtMiddleware::class);
+    Route::post('update-password', [LoginController::class, 'updatePasswoard'])->middleware(JwtMiddleware::class);
 
     Route::post('logout', [LoginController::class, 'logout'])->middleware(JwtMiddleware::class);
     Route::get('me', [LoginController::class, 'me'])->middleware(JwtMiddleware::class);
