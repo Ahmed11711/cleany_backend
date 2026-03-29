@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\Company\Checkout\CheckoutController;
-use App\Http\Controllers\Api\Payment\CreateLinkPaymentController;
+use App\Http\Controllers\API\Payment\CreateLinkPaymentController;
 use Illuminate\Support\Facades\Route;
 
 
