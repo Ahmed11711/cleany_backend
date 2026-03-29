@@ -33,16 +33,23 @@ class CategoryController extends Controller
     public function getCompaniesByCategory(Request $request, $categoryId)
     {
         $regionId = $request->query('region_id');
+        $search = $request->query('search'); // استلام كلمة البحث
 
-        $companies = Company::whereHas('categories', function ($query) use ($categoryId, $regionId) {
-            $query->where('categories.id', $categoryId);
+        $companies = Company::query()
+            // 1. البحث باسم الشركة (لو المستخدم بعت search)
+            ->when($search, function ($query, $search) {
+                $query->where('name', 'like', "%{$search}%");
+            })
+            // 2. الفلترة بالقسم والمنطقة
+            ->whereHas('categories', function ($query) use ($categoryId, $regionId) {
+                $query->where('categories.id', $categoryId);
 
-            if ($regionId) {
-                $query->where('category_company.region_id', $regionId);
-            } else {
-                $query->whereNull('category_company.region_id');
-            }
-        })
+                if ($regionId) {
+                    $query->where('category_company.region_id', $regionId);
+                } else {
+                    $query->whereNull('category_company.region_id');
+                }
+            })
             ->with(['services', 'specialties', 'categories' => function ($q) use ($categoryId) {
                 $q->where('categories.id', $categoryId);
             }])
