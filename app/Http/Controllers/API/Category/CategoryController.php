@@ -16,10 +16,19 @@ class CategoryController extends Controller
      * @tags Mobile App
      */
     use ApiResponseTrait;
-    public function index()
+    public function index(Request $request)
     {
-        $categories = Category::get();
-        return $this->successResponse(CategoryResource::collection($categories), 'Categories retrieved successfully');
+        $categories = Category::query()
+
+            ->when($request->search, function ($query, $search) {
+                return $query->where('name', 'like', "%{$search}%");
+            })
+            ->get();
+
+        return $this->successResponse(
+            CategoryResource::collection($categories),
+            'Categories retrieved successfully'
+        );
     }
     public function getCompaniesByCategory(Request $request, $categoryId)
     {
