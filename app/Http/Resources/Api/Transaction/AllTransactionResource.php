@@ -25,7 +25,7 @@ class AllTransactionResource extends JsonResource
             'notes'          => $this->notes,
             'service_id'     => $this->service_id,
             // Accessing the relationship safely
-            'service_name'   => $this->service->service_name ?? "Deposite",
+            'service_name'   => $this->service->service_name ?? null,
             'created_at'     => $this->created_at->format('Y-m-d H:i:s'),
             'updated_at'     => $this->updated_at->format('Y-m-d H:i:s'),
         ];
