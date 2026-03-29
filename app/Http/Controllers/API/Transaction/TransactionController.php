@@ -16,7 +16,7 @@ class TransactionController extends Controller
     {
         $userId = $request->user_id;
 
-        $transactions = Transaction::with('service')
+        return  $transactions = Transaction::with('service')
             ->where('user_id', $userId)
             ->get();
 
