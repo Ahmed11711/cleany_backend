@@ -43,10 +43,6 @@ class CreateLinkPaymentController extends Controller
         if ($transactionId) {
             $this->createLinkRepo->updateTransaction($transactionId, $data['paymentStatus']);
         }
-
-        return redirect()->away(
-            'http://72.62.27.82/next-site'
-        );
     }
 
     public function failure(Request $request)
