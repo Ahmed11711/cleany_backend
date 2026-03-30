@@ -16,6 +16,7 @@ class FavouriteController extends Controller
      */
     public function toggle(Request $request)
     {
+        return 5555555;
         $request->validate([
             'company_id' => 'required|exists:companies,id',
         ]);
