@@ -3,9 +3,10 @@
 namespace App\Http\Controllers\API\Favourite;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Http\Requests\Api\Favou\FavRequest;
 use App\Models\Company;
 use App\Traits\ApiResponseTrait;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class FavouriteController extends Controller
@@ -14,14 +15,11 @@ class FavouriteController extends Controller
     /**
      * Toggle a company as a favourite for the authenticated user.
      */
-    public function toggle(Request $request)
+    public function toggle(FavRequest $request)
     {
+        $data = $request->validated();
         $user = Auth::user();
 
-        // التحقق من وجود المعرف ومن وجود الشركة في قاعدة البيانات
-        $request->validate([
-            'company_id' => 'required|exists:companies,id'
-        ]);
 
         $companyId = $request->company_id;
 
