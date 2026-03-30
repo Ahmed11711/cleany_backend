@@ -6,19 +6,18 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Notification;
+use App\Traits\ApiResponseTrait;
 
 class NotficationController extends Controller
 {
+    use ApiResponseTrait;
     public function index()
     {
-        $notifications = Auth::user()->notifications() // بفرض وجود علاقة في موديل User
+        $notifications = Auth::user()->notifications()
             ->orderBy('created_at', 'desc')
             ->paginate(15);
 
-        return response()->json([
-            'status' => true,
-            'data' => $notifications
-        ], 200);
+        return $this->successResponsePaginate($notifications, "List Of My Notifaction");
     }
 
     /**
