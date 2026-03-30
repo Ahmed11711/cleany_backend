@@ -16,16 +16,16 @@ class FavouriteController extends Controller
      */
     public function toggle(Request $request)
     {
-
-
         $user = Auth::user();
-        $companyId = $request->company_id;
-        if (!$companyId) {
-            return $this->errorResponse("not found ");
-        }
 
-        // toggle() is a magic method for many-to-many relationships.
-        // It inserts the record if it doesn't exist, and deletes it if it does.
+        // التحقق من وجود المعرف ومن وجود الشركة في قاعدة البيانات
+        $request->validate([
+            'company_id' => 'required|exists:companies,id'
+        ]);
+
+        $companyId = $request->company_id;
+
+        // تنفيذ الـ Toggle
         $status = $user->favouriteCompanies()->toggle($companyId);
 
         if (count($status['attached']) > 0) {
