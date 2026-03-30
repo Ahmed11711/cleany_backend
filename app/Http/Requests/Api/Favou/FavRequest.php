@@ -8,6 +8,13 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class FavRequest extends BaseRequest
 {
+    /**
+     * Determine if the user is authorized to make this request.
+     */
+    public function authorize(): bool
+    {
+        return true;
+    }
 
     /**
      * Get the validation rules that apply to the request.
@@ -17,8 +24,7 @@ class FavRequest extends BaseRequest
     public function rules(): array
     {
         return [
-            'company_id' => 'required|'
-
+            'id' => 'required',
         ];
     }
 }
