@@ -62,4 +62,8 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->hasMany(Notifaction::class);
     }
+    public function favouriteCompanies()
+    {
+        return $this->belongsToMany(Company::class, 'favourites');
+    }
 }
