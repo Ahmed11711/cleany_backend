@@ -17,7 +17,7 @@ class FavRequest extends BaseRequest
     public function rules(): array
     {
         return [
-            'company_id' => 'required|exists:companies,id'
+            'company_id' => 'required|'
 
         ];
     }
