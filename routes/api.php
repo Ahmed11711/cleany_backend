@@ -5,6 +5,8 @@ use \App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\API\Comapny\BookingController;
 use App\Http\Controllers\API\Comapny\CompanyController;
 use App\Http\Controllers\API\Company\Checkout\CheckoutController;
+use App\Http\Controllers\API\Favourite\FavouriteController;
+use App\Http\Controllers\API\Notfication\NotficationController;
 use App\Http\Controllers\API\Offer\OfferController;
 use App\Http\Controllers\API\Payment\CreateLinkPaymentController;
 use App\Http\Controllers\API\Region\RegionController;
@@ -12,6 +14,8 @@ use App\Http\Controllers\API\Tracking\StaffTrackingController;
 use App\Http\Controllers\API\Transaction\TransactionController;
 use App\Http\Middleware\JwtMiddleware;
 use Illuminate\Support\Facades\Route;
+
+
 
 
 
@@ -69,6 +73,14 @@ Route::prefix('v1/app')->name('app.')->group(function () {
 
         Route::post('/update', [StaffTrackingController::class, 'update']);
     });
+
+
+    Route::get('/notifications', [NotficationController::class, 'index'])->middleware(JwtMiddleware::class);
+    Route::patch('/notifications/{id}/read', [NotficationController::class, 'markAsRead'])->middleware(JwtMiddleware::class);
+    Route::post('/notifications/read-all', [NotficationController::class, 'markAllAsRead'])->middleware(JwtMiddleware::class);
+    Route::delete('/notifications/{id}', [NotficationController::class, 'destroy'])->middleware(JwtMiddleware::class);
+    Route::get('/favourites', [FavouriteController::class, 'index'])->middleware(JwtMiddleware::class);
+    Route::post('/favourites/toggle', [FavouriteController::class, 'toggle'])->middleware(JwtMiddleware::class);
 });
 
 // 
