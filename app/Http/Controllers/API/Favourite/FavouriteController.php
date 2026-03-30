@@ -5,10 +5,12 @@ namespace App\Http\Controllers\API\Favourite;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Company;
+use App\Traits\ApiResponseTrait;
 use Illuminate\Support\Facades\Auth;
 
 class FavouriteController extends Controller
 {
+    use ApiResponseTrait;
     /**
      * Toggle a company as a favourite for the authenticated user.
      */
@@ -39,6 +41,7 @@ class FavouriteController extends Controller
     {
         $favourites = Auth::user()->favouriteCompanies()->get();
 
+        return $this->successResponse($favourites, "list");
         return response()->json([
             'data' => $favourites
         ], 200);
