@@ -21,8 +21,7 @@ class FavouriteController extends Controller
         $user = Auth::user();
 
 
-        return $companyId = $request->company_id;
-
+        return     $companyId = $data['company_id'];
         // تنفيذ الـ Toggle
         $status = $user->favouriteCompanies()->toggle($companyId);
 
