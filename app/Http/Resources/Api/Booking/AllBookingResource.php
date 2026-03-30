@@ -18,6 +18,8 @@ class AllBookingResource extends JsonResource
             'id' => $this->id,
             'service_id' => $this->service_id,
             'service_name' => $this->service->service_name ?? null,
+            'staff_id' => $this->staff_id,
+            'staff_name' => $this->staff->name ?? null,
             'status' => $this->status,
             'booking_date' => $this->booking_date,
             'start_time' => $this->start_time,

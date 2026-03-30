@@ -22,6 +22,7 @@ return new class extends Migration
             $table->unsignedBigInteger('company_id')->nullable();
             $table->boolean('is_active')->default(true);
             $table->string('profile_photo', 2048)->nullable();
+            $table->text('fcm_token')->nullable();
 
 
             $table->rememberToken();
