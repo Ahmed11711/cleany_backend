@@ -23,7 +23,7 @@ class CreateAccountRequest extends BaseRequest
 
 
             'profile_photo' => 'nullable|image|mimes:jpeg,png,jpg', // 2MB كحد أقصى
-            'fcm_token' => 'required|string'
+            'fcm_token' => 'nullable|string'
 
         ];
     }

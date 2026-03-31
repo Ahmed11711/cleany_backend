@@ -126,4 +126,19 @@ class LoginController extends Controller
 
         return $this->successResponse(null, 'Password updated successfully.');
     }
+
+    public function updateToken(Request $request)
+    {
+        $request->validate([
+            'fcm_token' => 'required|string'
+        ]);
+        $user = Auth::guard('api')->user();
+        $user->fcm_token = $request->fcm_token;
+        $user->save();
+
+
+        // تحديث التوكن للمستخدم المسجل
+
+        return response()->json(['message' => 'Token updated successfully']);
+    }
 }

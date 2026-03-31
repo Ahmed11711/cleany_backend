@@ -38,6 +38,7 @@ Route::get('test22', function () {
 Route::prefix('v1/app/auth')->group(function () {
     Route::post('login', [LoginController::class, 'login']);
     Route::post('create-account', [LoginController::class, 'createAccount']);
+    Route::post('update-fcm-token', [LoginController::class, 'updateToken']);
     Route::post('update-account', [LoginController::class, 'updateAccount'])->middleware(JwtMiddleware::class);
     Route::post('update-password', [LoginController::class, 'updatePassword'])->middleware(JwtMiddleware::class);
 
