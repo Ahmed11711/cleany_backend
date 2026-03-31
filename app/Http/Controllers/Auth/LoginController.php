@@ -62,14 +62,9 @@ class LoginController extends Controller
     public function createAccount(CreateAccountRequest $request)
     {
         $data = $request->validated();
-
         $data['password'] = bcrypt($request->password);
-
-
-
         $data['profile_photo'] = $this->uploadManager($request, $data, 'Users', ['profile_photo']);
         $data['role'] = 'user';
-
 
         $user = User::create($data);
 
@@ -77,8 +72,13 @@ class LoginController extends Controller
             $user->wallet()->create(['balance' => 0]);
         }
 
+        // --- Generate the token for the new user ---
+        $token = Auth::guard('api')->login($user);
+
         return $this->successResponse([
             'user' => $user,
+            'access_token' => $token,
+            'token_type' => 'bearer',
         ], 'Account created successfully');
     }
 
