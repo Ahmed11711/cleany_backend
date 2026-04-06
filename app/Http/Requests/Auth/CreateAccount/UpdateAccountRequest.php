@@ -24,7 +24,7 @@ class UpdateAccountRequest extends BaseRequest
 
 
 
-            'profile_photo' => 'nullable|image|mimes:jpeg,png,jpg', // 2MB كحد أقصى
+            'profile_photo' => 'nullable|image|mimes:jpeg,png,jpg',
         ];
     }
 

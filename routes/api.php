@@ -12,8 +12,10 @@ use App\Http\Controllers\API\Payment\CreateLinkPaymentController;
 use App\Http\Controllers\API\Region\RegionController;
 use App\Http\Controllers\API\Tracking\StaffTrackingController;
 use App\Http\Controllers\API\Transaction\TransactionController;
+use App\Http\Controllers\Auth\OtpController;
 use App\Http\Middleware\JwtMiddleware;
 use Illuminate\Support\Facades\Route;
+
 
 
 
@@ -44,6 +46,12 @@ Route::prefix('v1/app/auth')->group(function () {
 
     Route::post('logout', [LoginController::class, 'logout'])->middleware(JwtMiddleware::class);
     Route::get('me', [LoginController::class, 'me'])->middleware(JwtMiddleware::class);
+
+    Route::post('/send-otp', [OtpController::class, 'sendOtp']);
+
+    Route::post('/check-otp', [OtpController::class, 'checkOtp']);
+
+    Route::post('/reset-password', [OtpController::class, 'resetPassword']);
 });
 
 
