@@ -23,7 +23,7 @@ class ForgetPassword extends BaseRequest
         return [
             'email'    => 'required|email|exists:users,email',
             'otp'      => 'required|numeric',
-            'password' => 'required|string|min:8|confirmed'
+            'password' => 'required|string|min:8'
         ];
     }
 }
