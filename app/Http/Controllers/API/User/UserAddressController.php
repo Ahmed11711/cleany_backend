@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API\User;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\User\AddressResource;
 use App\Models\UserAddres;
 use App\Traits\ApiResponseTrait; // استخدم الـ Trait اللي عندك
 use Illuminate\Http\Request;
@@ -18,20 +19,9 @@ class UserAddressController extends Controller
         return $this->successResponse($addresses, 'Addresses retrieved successfully', 200);
     }
 
-    // تخزين عنوان جديد
-    public function store(Request $request)
+    public function store(AddressResource $request)
     {
-        $validator = Validator::make($request->all(), [
-            'name'         => 'required|string|max:255',
-            'phone'        => 'required|string',
-            'address'      => 'required|string',
-            'city'         => 'required|string',
-            'country'      => 'required|string',
-            'latitude'     => 'nullable|numeric',
-            'longitude'    => 'nullable|numeric',
-            'state'        => 'nullable|string',
-            'postal_code'  => 'nullable|string',
-        ]);
+        $validator = $request->validated();
 
         if ($validator->fails()) {
             return $this->errorResponse("eroor", $validator->errors()->first(), 422);
