@@ -66,7 +66,7 @@ class CheckoutController extends Controller
                 $booking->update([
                     'payment_method' => 'wallet',
                     'payment_status' => 'paid',
-                    'status'         => 'confirmed'
+                    'status'         => 'pending'
                 ]);
             });
 

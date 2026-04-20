@@ -9,10 +9,14 @@ use App\Http\Controllers\Company\Availability\AvailabilityController;
 use App\Http\Controllers\Company\Booking\BookingController;
 use App\Http\Controllers\Company\Dashboard\MyCompnayController;
 use App\Http\Controllers\Company\Service\ServiceController;
+use App\Http\Controllers\Company\Specialy\SpecialtyController;
+use App\Http\Controllers\Company\Specialy\SpecialtysController;
 use App\Http\Controllers\Company\Staff\StaffController;
 use App\Http\Middleware\CheckIsCompany;
 use App\Http\Middleware\JwtMiddleware;
 use Illuminate\Support\Facades\Route;
+
+
 
 
 
@@ -35,6 +39,7 @@ Route::prefix('v1/company/')->middleware(CheckIsCompany::class)->group(function 
         Route::put('/{id}', [ServiceController::class, 'update']);
         Route::delete('/{id}', [ServiceController::class, 'destroy']);
     });
+    Route::apiResource('specialtiesComapny', SpecialtysController::class);
     Route::get('bookings', [BookingController::class, 'index']);
     Route::Put('/bookings/{id}/status', [BookingController::class, 'updateStatus']);
     Route::get('availability', [AvailabilityController::class, 'index']);
