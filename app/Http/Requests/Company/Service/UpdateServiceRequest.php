@@ -12,11 +12,15 @@ class UpdateServiceRequest extends BaseRequest
     public function rules(): array
     {
         return [
+            'image' => 'nullable|file',
+            'service_name_ar' => 'nullable|string',
             'service_name' => 'nullable|string',
             'price'        => 'nullable|numeric',
             'price_today'  => 'nullable|numeric',
             'discount'     => 'integer',
-            'standard_bags' => 'nullable|string'
+            'standard_bags' => 'nullable|string',
+            'standard_bags_ar' => 'nullable|string'
+
         ];
     }
 }
