@@ -6,7 +6,7 @@ use App\Http\Requests\BaseRequest\BaseRequest;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class Address extends BaseRequest
+class AddressResource extends BaseRequest
 {
 
     public function rules(): array
