@@ -14,6 +14,7 @@ class StoreCompanyRequest extends BaseRequest
     {
         return [
             'name' => 'required|string|max:255',
+            'name_ar' => 'nullable|string',
             'logo' => 'required|file',
             'address' => 'nullable|string|max:255',
             'phone' => 'nullable|string|max:255',

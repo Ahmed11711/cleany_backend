@@ -27,8 +27,11 @@ class ApiComapnyResource extends JsonResource
             'is_verified' => $this->is_verified,
             'price' => $this->hourly_rate,
             'free_delivery' => $this->free_delivery,
+            'max_staff' => 10,
+            'price_staff' => 5,
             'services' => ApiServiceResource::collection($this->whenLoaded('services')),
             'specialties' => SpecialtyResource::collection($this->whenLoaded('specialties')),
+            // 'dray_clean'
         ];
     }
 }

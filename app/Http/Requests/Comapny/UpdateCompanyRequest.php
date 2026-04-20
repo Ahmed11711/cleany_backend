@@ -13,6 +13,7 @@ class UpdateCompanyRequest extends BaseRequest
     {
         return [
             'name' => 'nullable|string|max:255',
+            'name_ar' => 'nullable|string',
             'logo' => 'nullable|file',
             'address' => 'nullable|string|max:255',
             'phone' => 'nullable|string|max:255',
