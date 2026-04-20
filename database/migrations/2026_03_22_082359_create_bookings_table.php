@@ -37,6 +37,7 @@ return new class extends Migration
             $table->string('address')->nullable();
             $table->text('notes')->nullable();
             $table->integer('staff_id')->nullable();
+            $table->integer('count_staff')->nullable();
             $table->string('transaction_id')->nullable();
             $table->timestamps();
         });

@@ -12,9 +12,11 @@ use App\Http\Controllers\API\Payment\CreateLinkPaymentController;
 use App\Http\Controllers\API\Region\RegionController;
 use App\Http\Controllers\API\Tracking\StaffTrackingController;
 use App\Http\Controllers\API\Transaction\TransactionController;
+use App\Http\Controllers\API\User\UserAddressController;
 use App\Http\Controllers\Auth\OtpController;
 use App\Http\Middleware\JwtMiddleware;
 use Illuminate\Support\Facades\Route;
+
 
 
 
@@ -66,6 +68,8 @@ Route::prefix('v1/app')->name('app.')->group(function () {
     Route::get('booking/{id}', [BookingController::class, 'show'])->middleware(JwtMiddleware::class);
 
     Route::post('checkout', [CheckoutController::class, 'checkout'])->middleware(JwtMiddleware::class);
+    Route::get('addresses', [UserAddressController::class, 'index'])->middleware(JwtMiddleware::class);
+    Route::post('addresses', [UserAddressController::class, 'store'])->middleware(JwtMiddleware::class);
 
 
     Route::post('create-link-payment', [CreateLinkPaymentController::class, 'createLinkKashier'])->middleware(JwtMiddleware::class);

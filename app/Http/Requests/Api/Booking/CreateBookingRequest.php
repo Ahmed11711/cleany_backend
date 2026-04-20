@@ -17,7 +17,9 @@ class CreateBookingRequest extends BaseRequest
             'start_time' => 'required',
             'hours' => 'required|integer|min:1',
             'notes' => 'nullable|string',
-            'address' => 'required|string'
+            'address' => 'nullable|string',
+            'addres_id' => 'required|string',
+            'count_staff' => 'nullable|integer|min:1'
         ];
     }
 }

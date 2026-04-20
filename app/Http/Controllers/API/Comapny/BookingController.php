@@ -31,11 +31,9 @@ class BookingController extends Controller
 
         // --- الحل هنا ---
         try {
-            // لو الـ start_time مجرد رقم (ساعة)
             if (is_numeric($request->start_time)) {
                 $startTime = Carbon::createFromFormat('H', $request->start_time)->startOfHour();
             } else {
-                // لو باعت وقت كامل زي 09:30
                 $startTime = Carbon::parse($request->start_time);
             }
         } catch (\Exception $e) {
@@ -48,14 +46,15 @@ class BookingController extends Controller
             'company_id' => $service->company_id,
             'service_id' => $service->id,
             'booking_date' => $request->booking_date,
-            'start_time' => $startTime->format('H:i:s'), // هيتخزن 09:00:00
+            'start_time' => $startTime->format('H:i:s'),
             'hours' => $request->hours,
             'end_time' => $endTime->format('H:i:s'),
             'unit_price' => $unitPrice,
             'discount_applied' => $service->discount,
             'total_price' => $totalPrice,
             'status' => 'pending',
-            'address'          => $data['address'], // سيأخذ القيمة من الـ Request
+            'count_staff' => $data['count_staff'] ?? 1,
+            'address'          => $data['address_id'],
             'notes'            => $data['notes'] ?? null,
             'transaction_id'    => 'TRX-' . strtoupper(Str::random(10)),
         ]);
