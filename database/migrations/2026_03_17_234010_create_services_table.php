@@ -23,6 +23,8 @@ return new class extends Migration
             $table->integer('discount')->default(0); // 10%
             $table->text('standard_bags')->nullable();
             $table->text('standard_bags_ar')->nullable();
+            $table->integer('max_staff')->nullable();
+            $table->string('price_staff')->nullable();
             $table->timestamps();
         });
     }

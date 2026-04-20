@@ -18,7 +18,9 @@ class CreateServiceRequest extends BaseRequest
             'price_today'  => 'required|numeric',
             'discount'     => 'integer',
             'standard_bags' => 'nullable|string',
-            'standard_bags_ar' => 'nullable|string'
+            'standard_bags_ar' => 'nullable|string',
+            'max_staff' => 'nullable|integer',
+            'price_staff' => 'nullable|string',
         ];
     }
 }
