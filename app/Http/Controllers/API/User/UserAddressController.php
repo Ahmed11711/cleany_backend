@@ -23,9 +23,7 @@ class UserAddressController extends Controller
     {
         $validator = $request->validated();
 
-        if ($validator->fails()) {
-            return $this->errorResponse("eroor", $validator->errors()->first(), 422);
-        }
+
 
         $address = UserAddres::create([
             'user_id'     => auth('api')->id(),
