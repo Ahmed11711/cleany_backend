@@ -36,7 +36,6 @@ class CategoryController extends Controller
         $search = $request->query('search'); // استلام كلمة البحث
 
         $companies = Company::query()
-            // 1. البحث باسم الشركة (لو المستخدم بعت search)
             ->when($search, function ($query, $search) {
                 $query->where('name', 'like', "%{$search}%");
             })
