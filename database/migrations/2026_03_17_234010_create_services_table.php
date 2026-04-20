@@ -14,12 +14,15 @@ return new class extends Migration
         Schema::create('services', function (Blueprint $table) {
             $table->id();
             $table->foreignId('company_id')->constrained('companies')->onDelete('cascade');
+            $table->string('image')->nullable();
             $table->string('service_name');
+            $table->string('service_name_ar')->nullable();
             $table->decimal('price', 8, 2)->nullable();
             $table->decimal('price_today', 8, 2)->nullable();
             // discount
             $table->integer('discount')->default(0); // 10%
             $table->text('standard_bags')->nullable();
+            $table->text('standard_bags_ar')->nullable();
             $table->timestamps();
         });
     }
