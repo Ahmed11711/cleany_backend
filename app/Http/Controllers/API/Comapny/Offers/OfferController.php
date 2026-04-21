@@ -34,7 +34,9 @@ class OfferController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'title'        => 'required|string|max:255',
+            'title_ar'        => 'nullable|string|max:255',
             'description'  => 'required|string',
+            'description_ar'  => 'required|string',
             'category_id'  => 'required|exists:categories,id',
             'image'        => 'required|image|mimes:jpeg,png,jpg,webp|max:2048',
         ]);
@@ -46,7 +48,9 @@ class OfferController extends Controller
         // 1. بدلاً من $request->all()، حدد فقط الحقول الموجودة في قاعدة البيانات
         $data = [
             'title'       => $request->title,
+            'title_ar'       => $request->title_ar,
             'description' => $request->description,
+            'description_ar' => $request->description_ar,
             'category_id' => $request->category_id,
             'company_id'  => $request->company_id,
             'is_active'   => false, // أو true حسب رغبتك
