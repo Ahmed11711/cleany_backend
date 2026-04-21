@@ -10,4 +10,9 @@ class Service extends Model
     {
         return $this->hasMany(Availability::class);
     }
+
+    public function ServiceItems()
+    {
+        return $this->hasMany(ServiceItem::class);
+    }
 }

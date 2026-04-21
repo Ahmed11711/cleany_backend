@@ -31,7 +31,7 @@ class ApiComapnyResource extends JsonResource
             'price_staff' => 5,
             'services' => ApiServiceResource::collection($this->whenLoaded('services')),
             'specialties' => SpecialtyResource::collection($this->whenLoaded('specialties')),
-            // 'dray_clean'
+
         ];
     }
 }
