@@ -82,14 +82,34 @@ class ServiceController extends Controller
 
 
 
+    // public function storeOrUpdate(ServiceItemsRequest $request)
+    // {
+    //     $data = $request->validated();
+
+    //     $item = $request->id
+    //         ? ServiceItem::findOrFail($request->id)
+    //         : new ServiceItem();
+
+    //     if ($request->hasFile('image')) {
+    //         $data['image'] = $this->uploadManager($request, $data, 'service_items', ['image'], $item);
+    //     }
+
+    //     $item->fill($data);
+    //     $item->save();
+
+    //     return $this->successResponse($item, 'Service item saved successfully');
+    // }
+
+
     public function storeOrUpdate(ServiceItemsRequest $request)
     {
         $data = $request->validated();
+        $id = $request->input('service_id');
 
-        $item = $request->id
-            ? ServiceItem::findOrFail($request->id)
-            : new ServiceItem();
+        // البحث عن العنصر أو إنشاء واحد جديد
+        $item = $id ? ServiceItem::findOrFail($id) : new ServiceItem();
 
+        // معالجة الصورة
         if ($request->hasFile('image')) {
             $data['image'] = $this->uploadManager($request, $data, 'service_items', ['image'], $item);
         }
@@ -99,7 +119,6 @@ class ServiceController extends Controller
 
         return $this->successResponse($item, 'Service item saved successfully');
     }
-
     public function getServiceItems($id)
     {
 
