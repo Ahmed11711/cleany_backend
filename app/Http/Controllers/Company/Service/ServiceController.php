@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Company\Service;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Company\Service\CreateServiceRequest;
 use App\Http\Requests\Company\Service\UpdateServiceRequest;
+use App\Http\Requests\Company\ServiceItems\ServiceItemsRequest;
 use App\Models\Service;
+use App\Models\ServiceItem;
 use App\Traits\ApiResponseTrait;
 use App\Traits\UploadImageTrait;
 use Illuminate\Http\Request;
@@ -76,5 +78,25 @@ class ServiceController extends Controller
 
         $service->delete();
         return $this->successResponse(null, 'Service deleted successfully');
+    }
+
+
+
+    public function storeOrUpdate(ServiceItemsRequest $request)
+    {
+        $data = $request->validated();
+
+        $item = $request->id
+            ? ServiceItem::findOrFail($request->id)
+            : new ServiceItem();
+
+        if ($request->hasFile('image')) {
+            $data['image'] = $this->uploadManager($request, $data, 'service_items', ['image'], $item);
+        }
+
+        $item->fill($data);
+        $item->save();
+
+        return $this->successResponse($item, 'Service item saved successfully');
     }
 }
