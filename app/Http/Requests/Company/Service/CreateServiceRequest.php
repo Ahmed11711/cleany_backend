@@ -11,7 +11,7 @@ class CreateServiceRequest extends BaseRequest
     public function rules(): array
     {
         return [
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:5120',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,webp',
             'service_name' => 'required|string',
             'service_name_ar' => 'nullable|string',
             'price'        => 'required|numeric',

@@ -12,7 +12,7 @@ class UpdateServiceRequest extends BaseRequest
     public function rules(): array
     {
         return [
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:5120',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,webp',
             'service_name_ar' => 'nullable|string',
             'service_name' => 'nullable|string',
             'price'        => 'nullable|numeric',
