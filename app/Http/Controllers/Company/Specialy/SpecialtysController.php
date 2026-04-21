@@ -10,7 +10,6 @@ class SpecialtysController extends Controller
 {
     public function index(Request $request)
     {
-        // جلب الـ ID من الريكويست مباشرة
         $companyId = $request->company_id;
 
         $specialties = Specialty::where('company_id', $companyId)
@@ -24,6 +23,7 @@ class SpecialtysController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
+            'name_ar' => 'nullable|string|max:255',
             'company_id' => 'required|exists:companies,id', // التأكد من وجود الشركة
         ]);
 
@@ -31,6 +31,7 @@ class SpecialtysController extends Controller
 
         $specialty = Specialty::create([
             'name' => $request->name,
+            'name_ar' => $request->name_ar ?? $request->name,
             'company_id' => $companyId,
             'is_active' => $request->is_active ?? true,
         ]);
@@ -47,6 +48,7 @@ class SpecialtysController extends Controller
 
         $request->validate([
             'name' => 'sometimes|required|string|max:255',
+            'name_ar' => 'sometimes|required|string|max:255',
         ]);
 
         $specialty->update($request->only(['name', 'is_active']));
