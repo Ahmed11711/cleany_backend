@@ -36,9 +36,12 @@ Route::prefix('v1/company/')->middleware(CheckIsCompany::class)->group(function 
     Route::prefix('services')->group(function () {
         Route::get('/', [ServiceController::class, 'index']);
         Route::post('/', [ServiceController::class, 'store']);
+
+        Route::get('items/{id}', [ServiceController::class, 'getServiceItems']);
+        Route::post('items', [ServiceController::class, 'storeOrUpdate']);
+
         Route::put('/{id}', [ServiceController::class, 'update']);
         Route::delete('/{id}', [ServiceController::class, 'destroy']);
-        Route::post('items', [ServiceController::class, 'storeOrUpdate']);
     });
     Route::apiResource('specialtiesComapny', SpecialtysController::class);
     Route::get('bookings', [BookingController::class, 'index']);

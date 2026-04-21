@@ -99,4 +99,16 @@ class ServiceController extends Controller
 
         return $this->successResponse($item, 'Service item saved successfully');
     }
+
+    public function getServiceItems($id)
+    {
+
+        $items = ServiceItem::where('service_id', $id)->get();
+
+        if ($items->isEmpty()) {
+            return $this->successResponse([], 'No items found for this service', 200);
+        }
+
+        return $this->successResponse($items, 'Service items retrieved successfully');
+    }
 }
