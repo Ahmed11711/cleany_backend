@@ -34,12 +34,15 @@ Route::prefix('v1/company/')->middleware(CheckIsCompany::class)->group(function 
     Route::post('my-company', [MyCompnayController::class, 'store']); // للإنشاء
     Route::match(['post', 'put'], 'my-company', [MyCompnayController::class, 'update']);
     Route::prefix('services')->group(function () {
+        // 1. الأفعال العامة (بدون ID)
         Route::get('/', [ServiceController::class, 'index']);
         Route::post('/', [ServiceController::class, 'store']);
 
-        Route::get('items/{id}', [ServiceController::class, 'getServiceItems']);
+        // 2. المسارات الثابتة الخاصة بالـ Items (يجب أن تكون قبل الـ {id})
         Route::post('items', [ServiceController::class, 'storeOrUpdate']);
+        Route::get('items/{id}', [ServiceController::class, 'getServiceItems']);
 
+        // 3. المسارات التي تحتوي على متغير {id} (دائماً في الأسفل)
         Route::put('/{id}', [ServiceController::class, 'update']);
         Route::delete('/{id}', [ServiceController::class, 'destroy']);
     });
