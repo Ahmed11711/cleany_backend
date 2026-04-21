@@ -39,13 +39,15 @@ Route::prefix('v1/company/')->middleware(CheckIsCompany::class)->group(function 
         Route::post('/', [ServiceController::class, 'store']);
 
         // 2. المسارات الثابتة الخاصة بالـ Items (يجب أن تكون قبل الـ {id})
-        Route::post('items', [ServiceController::class, 'storeOrUpdate']);
-        Route::get('items/{id}', [ServiceController::class, 'getServiceItems']);
+
 
         // 3. المسارات التي تحتوي على متغير {id} (دائماً في الأسفل)
         Route::put('/{id}', [ServiceController::class, 'update']);
         Route::delete('/{id}', [ServiceController::class, 'destroy']);
     });
+
+    Route::post('Service-items', [ServiceController::class, 'storeOrUpdate']);
+    Route::get('Service-items/{id}', [ServiceController::class, 'getServiceItems']);
     Route::apiResource('specialtiesComapny', SpecialtysController::class);
     Route::get('bookings', [BookingController::class, 'index']);
     Route::Put('/bookings/{id}/status', [BookingController::class, 'updateStatus']);
