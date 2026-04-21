@@ -104,16 +104,19 @@ class ServiceController extends Controller
     public function storeOrUpdate(ServiceItemsRequest $request)
     {
         $data = $request->validated();
-        $id = $request->input('service_id');
 
-        // البحث عن العنصر أو إنشاء واحد جديد
-        $item = $id ? ServiceItem::findOrFail($id) : new ServiceItem();
+        // 1. نسحب الـ id الخاص بالعنصر (إذا كان موجوداً فهو تعديل، وإذا لم يوجد فهو إضافة)
+        $itemId = $request->input('id');
 
-        // معالجة الصورة
+        // 2. البحث عن العنصر بالـ ID الخاص به، أو إنشاء كائن جديد
+        $item = $itemId ? ServiceItem::findOrFail($itemId) : new ServiceItem();
+
+        // 3. معالجة الصورة (الـ Trait سيهتم بحذف القديمة لو كان $item موجود)
         if ($request->hasFile('image')) {
             $data['image'] = $this->uploadManager($request, $data, 'service_items', ['image'], $item);
         }
 
+        // 4. تعبئة البيانات وحفظها
         $item->fill($data);
         $item->save();
 
