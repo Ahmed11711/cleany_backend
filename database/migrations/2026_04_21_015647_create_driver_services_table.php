@@ -13,10 +13,17 @@ return new class extends Migration
     {
         Schema::create('driver_services', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('service_id')->constrained()->onDelete('cascade');
+
+            $table->foreignId('service_item_id')->constrained('service_items')->onDelete('cascade');
+
             $table->string('title')->nullable();
-            $table->string('desc')->nullable();
-            $table->string('price')->nullable();
+            $table->string('title_ar')->nullable();
+
+            $table->text('desc')->nullable();
+            $table->text('desc_ar')->nullable();
+
+            $table->decimal('price', 10, 2)->nullable();
+
             $table->timestamps();
         });
     }
