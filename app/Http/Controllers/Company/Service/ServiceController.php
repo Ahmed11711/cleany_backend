@@ -7,12 +7,12 @@ use App\Http\Requests\Company\Service\CreateServiceRequest;
 use App\Http\Requests\Company\Service\UpdateServiceRequest;
 use App\Models\Service;
 use App\Traits\ApiResponseTrait;
+use App\Traits\UploadImageTrait;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 class ServiceController extends Controller
 {
-    use ApiResponseTrait;
+    use ApiResponseTrait, UploadImageTrait;
 
     public function index(Request $request)
     {
@@ -27,7 +27,7 @@ class ServiceController extends Controller
         $data['company_id'] = $request->company_id;
 
         if ($request->hasFile('image')) {
-            $data['image'] = $request->file('image')->store('services', 'public');
+            $data['image'] = $this->uploadManager($request, $data, 'services', ['image']);
         }
 
         $service = Service::create($data);
@@ -47,15 +47,12 @@ class ServiceController extends Controller
         $data = $request->validated();
 
         if ($request->hasFile('image')) {
-            // حذف الصورة القديمة لو موجودة
-            if ($service->image) {
-                Storage::disk('public')->delete($service->image);
-            }
-            $data['image'] = $request->file('image')->store('services', 'public');
+            // بتمرر الـ $service عشان الـ trait يحذف الصورة القديمة تلقائياً
+            $data['image'] = $this->uploadManager($request, $data, 'services', ['image'], $service);
         }
 
         $service->update($data);
-        return $this->successResponse($service, 'Service updated successfully');
+        return $this->successResponse($service->fresh(), 'Service updated successfully');
     }
 
     public function destroy(Request $request, $id)
@@ -68,9 +65,13 @@ class ServiceController extends Controller
             return $this->errorResponse('Unauthorized', 403);
         }
 
-        // حذف الصورة من الـ storage
+        // حذف الصورة يدوياً لأن الـ trait مش بيتعامل مع الحذف بدون request
         if ($service->image) {
-            Storage::disk('public')->delete($service->image);
+            $oldRelativePath = last(explode('/media/', $service->image));
+            $fullOldPath = public_path('media/' . $oldRelativePath);
+            if (file_exists($fullOldPath)) {
+                unlink($fullOldPath);
+            }
         }
 
         $service->delete();
