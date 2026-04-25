@@ -74,6 +74,7 @@ Route::prefix('v1/app')->name('app.')->group(function () {
     Route::post('addresses', [UserAddressController::class, 'store'])->middleware(JwtMiddleware::class);
     Route::post('coupon/check', [CouponController::class, 'check']);
 
+    //
 
     Route::post('create-link-payment', [CreateLinkPaymentController::class, 'createLinkKashier'])->middleware(JwtMiddleware::class);
     Route::get('payment/check-status/{transaction_id}', [CreateLinkPaymentController::class, 'checkStatus']);
