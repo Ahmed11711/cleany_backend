@@ -37,7 +37,7 @@ class BookingController extends Controller
                 $isToday     = $bookingDate->isToday();
 
                 $hours      = $serviceData['hours'] ?? 1;
-                $staffCount = $serviceData['staff_count'] ?? 0;
+                $staffCount = $serviceData['count_staff'] ?? 0;
 
                 // ✅ السعر الأساسي
                 $unitPrice = ($isToday && $service->price_today)

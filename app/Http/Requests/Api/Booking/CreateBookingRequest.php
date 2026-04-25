@@ -20,7 +20,7 @@ class CreateBookingRequest extends BaseRequest
             'services'                                  => 'required|array|min:1',
             'services.*.service_id'                     => 'required|exists:services,id',
             'services.*.hours'                          => 'nullable|integer|min:1',
-            'services.*.staff_count'                    => 'nullable|integer|min:1',
+            'services.*.count_staff'                    => 'nullable|integer|min:1',
             'services.*.start_time'                     => 'required',
             'services.*.booking_date'                   => 'required|date|after_or_equal:today',
             'services.*.package_sizes'                  => 'nullable|array',
