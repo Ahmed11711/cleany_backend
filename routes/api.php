@@ -5,6 +5,7 @@ use \App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\API\Comapny\BookingController;
 use App\Http\Controllers\API\Comapny\CompanyController;
 use App\Http\Controllers\API\Company\Checkout\CheckoutController;
+use App\Http\Controllers\Api\Coupon\CouponController;
 use App\Http\Controllers\API\Favourite\FavouriteController;
 use App\Http\Controllers\API\Notfication\NotficationController;
 use App\Http\Controllers\API\Offer\OfferController;
@@ -16,6 +17,7 @@ use App\Http\Controllers\API\User\UserAddressController;
 use App\Http\Controllers\Auth\OtpController;
 use App\Http\Middleware\JwtMiddleware;
 use Illuminate\Support\Facades\Route;
+
 
 
 
@@ -70,6 +72,7 @@ Route::prefix('v1/app')->name('app.')->group(function () {
     Route::post('checkout', [CheckoutController::class, 'checkout'])->middleware(JwtMiddleware::class);
     Route::get('addresses', [UserAddressController::class, 'index'])->middleware(JwtMiddleware::class);
     Route::post('addresses', [UserAddressController::class, 'store'])->middleware(JwtMiddleware::class);
+    Route::post('coupon/check', [CouponController::class, 'check']);
 
 
     Route::post('create-link-payment', [CreateLinkPaymentController::class, 'createLinkKashier'])->middleware(JwtMiddleware::class);
