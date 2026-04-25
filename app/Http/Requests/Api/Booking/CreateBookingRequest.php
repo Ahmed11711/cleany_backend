@@ -13,7 +13,7 @@ class CreateBookingRequest extends BaseRequest
     {
         return [
             // Global fields
-            'address'                                   => 'nullable|string',
+            'address'                                   => 'nullable',
             'notes'                                     => 'nullable|string',
 
             // Services array
