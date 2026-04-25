@@ -18,6 +18,6 @@ class Service extends Model
 
     public function driverServices()
     {
-        return $this->hasMany(DriverService::class, 'service_item_id');
+        return $this->hasMany(DriverService::class, 'service_item_id', 'id');
     }
 }
