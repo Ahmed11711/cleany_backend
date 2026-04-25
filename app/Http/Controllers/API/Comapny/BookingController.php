@@ -83,7 +83,7 @@ class BookingController extends Controller
                     'hours'            => $hours,
                     'count_staff'      => $staffCount,
                     'unit_price'       => $unitPrice,
-                    // 'staff_price'      => $staffTotal,
+                    'staff_price'      => $staffTotal,
                     'packages_price'   => $packagesTotal,
                     'discount_applied' => $service->discount,
                     'total_price'      => $totalPrice,
