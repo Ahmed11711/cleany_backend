@@ -15,4 +15,9 @@ class Service extends Model
     {
         return $this->hasMany(ServiceItem::class);
     }
+
+    public function driverServices()
+    {
+        return $this->hasMany(DriverService::class, 'service_item_id');
+    }
 }
