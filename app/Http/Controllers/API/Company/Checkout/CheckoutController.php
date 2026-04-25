@@ -19,19 +19,18 @@ class CheckoutController extends Controller
     {
         $data = $request->validated();
 
-        // جيب الـ booking الأول عشان تاخد منه الـ transaction_id
         $firstBooking = Booking::findOrFail($request->booking_id);
 
         if ($firstBooking->payment_status === 'paid') {
             return $this->errorResponse('This booking is already paid.', 400);
         }
 
-        // جيب كل الـ bookings المرتبطة بنفس الـ transaction_id
         $bookings = Booking::with('user.wallet')
             ->where('transaction_id', $firstBooking->transaction_id)
             ->get();
 
         $totalPrice = $bookings->sum('total_price');
+
         $user = $firstBooking->user;
 
         switch ($request->payment_method) {

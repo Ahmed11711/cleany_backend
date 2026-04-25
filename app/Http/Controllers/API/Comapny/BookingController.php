@@ -32,19 +32,32 @@ class BookingController extends Controller
         try {
             foreach ($data['services'] as $serviceData) {
 
-                $service    = Service::findOrFail($serviceData['service_id']);
+                $service     = Service::findOrFail($serviceData['service_id']);
                 $bookingDate = Carbon::parse($serviceData['booking_date']);
-                $isToday    = $bookingDate->isToday();
+                $isToday     = $bookingDate->isToday();
 
-                // ✅ nullable fields مع default values
                 $hours      = $serviceData['hours'] ?? 1;
-                $staffCount = $serviceData['staff_count'] ?? 1;
+                $staffCount = $serviceData['staff_count'] ?? 0;
 
+                // ✅ السعر الأساسي
                 $unitPrice = ($isToday && $service->price_today)
                     ? $service->price_today
                     : $service->price;
 
-                $subTotal   = $unitPrice * $hours;
+                // ✅ سعر الـ staff
+                $staffPrice = $service->price_staff ?? 0;
+                $staffTotal = $staffPrice * $staffCount * $hours;
+
+                // ✅ سعر الـ packages
+                $packagesTotal = 0;
+                if (!empty($serviceData['package_sizes'])) {
+                    foreach ($serviceData['package_sizes'] as $pkg) {
+                        $packagesTotal += ($pkg['price'] ?? 0) * ($pkg['quantity'] ?? 1);
+                    }
+                }
+
+                // ✅ الحساب الكلي مع الـ discount
+                $subTotal   = ($unitPrice * $hours) + $staffTotal + $packagesTotal;
                 $totalPrice = $subTotal - ($subTotal * ($service->discount / 100));
 
                 try {
@@ -70,6 +83,8 @@ class BookingController extends Controller
                     'hours'            => $hours,
                     'count_staff'      => $staffCount,
                     'unit_price'       => $unitPrice,
+                    'staff_price'      => $staffTotal,
+                    'packages_price'   => $packagesTotal,
                     'discount_applied' => $service->discount,
                     'total_price'      => $totalPrice,
                     'status'           => 'pending',
@@ -82,8 +97,8 @@ class BookingController extends Controller
                     foreach ($serviceData['package_sizes'] as $pkg) {
                         $booking->packageSizes()->create([
                             'package_size_id' => $pkg['id'],
-                            'quantity'        => $pkg['quantity'] ?? 1,   // ✅ nullable
-                            'price'           => $pkg['price'] ?? 0,      // ✅ nullable
+                            'quantity'        => $pkg['quantity'] ?? 1,
+                            'price'           => $pkg['price'] ?? 0,
                         ]);
                     }
                 }
@@ -96,7 +111,7 @@ class BookingController extends Controller
             return $this->successResponse([
                 'transaction_id' => $groupTransactionId,
                 'bookings'       => $bookings,
-            ], 'Bookings created successfullys');
+            ], 'Bookings created successfully');
         } catch (\Exception $e) {
             DB::rollBack();
             return response()->json([
