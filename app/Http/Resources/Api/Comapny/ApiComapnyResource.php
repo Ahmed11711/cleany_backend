@@ -19,10 +19,10 @@ class ApiComapnyResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'name_ar' => $this->name . " " . "ar",
+            'name_ar' => $this->name_ar,
             'logo' => $this->logo,
             'description' => $this->description,
-            'description_ar' => $this->description . " " . "ar",
+            'description_ar' => $this->description_ar,
             'rating' => $this->rating,
             'is_verified' => $this->is_verified,
             'price' => $this->hourly_rate,

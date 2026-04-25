@@ -29,7 +29,6 @@ class BookingController extends Controller
         $subTotal = $unitPrice * $request->hours;
         $totalPrice = $subTotal - ($subTotal * ($service->discount / 100));
 
-        // --- الحل هنا ---
         try {
             if (is_numeric($request->start_time)) {
                 $startTime = Carbon::createFromFormat('H', $request->start_time)->startOfHour();

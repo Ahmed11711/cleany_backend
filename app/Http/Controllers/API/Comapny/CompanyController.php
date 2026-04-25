@@ -36,7 +36,7 @@ class CompanyController extends Controller
 
     public function getAvailableSlots($id)
     {
-        $services = Service::with(['availabilities', 'ServiceItems.driverServices'])
+        $services = Service::with(['availabilities', 'ServiceItems', 'driverServices'])
             ->where('company_id', $id)
             ->get();
 
