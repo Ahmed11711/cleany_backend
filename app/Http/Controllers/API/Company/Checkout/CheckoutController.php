@@ -30,7 +30,6 @@ class CheckoutController extends Controller
             ->get();
 
         $totalPrice = $bookings->sum('total_price');
-
         $user = $firstBooking->user;
 
         switch ($request->payment_method) {
@@ -42,71 +41,80 @@ class CheckoutController extends Controller
                 return $this->payViaCash($bookings);
         }
     }
-    private function payViaWallet($booking)
-    {
-        $user = $booking->user;
 
-        if ($booking->payment_status === 'paid') {
-            return $this->errorResponse('This booking has already been paid.', 400);
-        }
-        if (!$user->wallet || $user->wallet->balance < $booking->total_price) {
+    private function payViaWallet($bookings, $user, $totalPrice)
+    {
+        if (!$user->wallet || $user->wallet->balance < $totalPrice) {
             return $this->errorResponse('Insufficient wallet balance.', 400);
         }
 
         try {
-            DB::transaction(function () use ($user, $booking) {
+            DB::transaction(function () use ($user, $bookings, $totalPrice) {
+                $user->wallet->decrement('balance', $totalPrice);
 
-                $user->wallet->decrement('balance', $booking->total_price);
                 $transactionId = (string) Str::uuid();
-                Transaction::create([
-                    'user_id'        => $user->id,
-                    'order_id'       => $booking->id,
-                    'amount'         => $booking->total_price,
-                    'type'           => 'payment',
-                    'payment_method' => 'wallet',
-                    'status'         => 'success',
-                    'notes'          => 'Payment for booking #' . $booking->id,
-                    'transaction_id'  => $transactionId,
-                ]);
 
-                $booking->update([
-                    'payment_method' => 'wallet',
-                    'payment_status' => 'paid',
-                    'status'         => 'pending'
-                ]);
+                foreach ($bookings as $booking) {
+                    Transaction::create([
+                        'user_id'        => $user->id,
+                        'order_id'       => $booking->id,
+                        'amount'         => $booking->total_price,
+                        'type'           => 'payment',
+                        'payment_method' => 'wallet',
+                        'status'         => 'success',
+                        'notes'          => 'Payment for booking #' . $booking->id,
+                        'transaction_id' => $transactionId,
+                    ]);
+
+                    $booking->update([
+                        'payment_method' => 'wallet',
+                        'payment_status' => 'paid',
+                        'status'         => 'pending',
+                    ]);
+                }
             });
 
-            return $this->successResponse($booking, 'Paid successfully from wallet and transaction recorded.');
+            return $this->successResponse($bookings, 'Paid successfully from wallet.');
         } catch (\Exception $e) {
-            return $this->errorResponse('Something went wrong during payment: ' . $e->getMessage(), 500);
+            return $this->errorResponse('Something went wrong: ' . $e->getMessage(), 500);
         }
     }
 
-    private function payViaCash($booking)
+    private function payViaCash($bookings)
     {
-        $booking->update([
-            'payment_method' => 'cash_on_hand',
-            'payment_status' => 'unpaid',
-            'status'         => 'confirmed'
-        ]);
+        foreach ($bookings as $booking) {
+            $booking->update([
+                'payment_method' => 'cash_on_hand',
+                'payment_status' => 'unpaid',
+                'status'         => 'confirmed',
+            ]);
+        }
 
-        return $this->successResponse($booking, 'Booking confirmed with Cash on Hand.');
+        return $this->successResponse($bookings, 'Booking confirmed with Cash on Hand.');
     }
 
-    private function payViaOnline($booking)
+    private function payViaOnline($bookings, $totalPrice, $user)
     {
-        $createLink = new CheckoutBookingService();
-        $paymentLink = $createLink->createSession($booking->total_price, $booking->user->email, $booking->transaction_id,);
+        $firstBooking = $bookings->first();
 
-        $booking->update([
-            'payment_method' => 'payment',
-            'payment_status' => 'unpaid',
-            'status'         => 'pending'
-        ]);
+        $createLink = new CheckoutBookingService();
+        $paymentLink = $createLink->createSession(
+            $totalPrice,
+            $user->email,
+            $firstBooking->transaction_id,
+        );
+
+        foreach ($bookings as $booking) {
+            $booking->update([
+                'payment_method' => 'payment',
+                'payment_status' => 'unpaid',
+                'status'         => 'pending',
+            ]);
+        }
 
         return $this->successResponse([
-            'booking_id'   => $booking->id,
-            'payment_url'  => $paymentLink
+            'booking_id'  => $firstBooking->id,
+            'payment_url' => $paymentLink,
         ], 'Redirect to payment gateway.');
     }
 
