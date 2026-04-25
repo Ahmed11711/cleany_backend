@@ -33,4 +33,8 @@ class booking extends Model
         return $this->belongsTo(Transaction::class, 'transaction_id');
     }
 
+    public function packageSizes()
+    {
+        return $this->hasMany(BookingPackageSize::class);
+    }
 }
