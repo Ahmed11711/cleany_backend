@@ -96,7 +96,7 @@ class BookingController extends Controller
             return $this->successResponse([
                 'transaction_id' => $groupTransactionId,
                 'bookings'       => $bookings,
-            ], 'Bookings created successfully');
+            ], 'Bookings created successfullys');
         } catch (\Exception $e) {
             DB::rollBack();
             return response()->json([
