@@ -21,9 +21,11 @@ class BookingController extends Controller
         $data = $request->validated();
         $userId = $request->user()->id;
 
-        // Key مشترك لكل الـ bookings في نفس العملية
-        $groupTransactionId = 'TRX-' . strtoupper(Str::random(10));
+        // Global fields
+        $globalAddress = $data['address'] ?? null;
+        $globalNotes   = $data['notes'] ?? null;
 
+        $groupTransactionId = 'TRX-' . strtoupper(Str::random(10));
         $bookings = [];
 
         DB::beginTransaction();
@@ -67,7 +69,9 @@ class BookingController extends Controller
                     'discount_applied' => $service->discount,
                     'total_price'      => $totalPrice,
                     'status'           => 'pending',
-                    'transaction_id'   => $groupTransactionId, // نفس الـ ID لكل الـ bookings
+                    'transaction_id'   => $groupTransactionId,
+                    'address'          => $globalAddress, // ✅ Global
+                    'notes'            => $globalNotes,   // ✅ Global
                 ]);
 
                 if (!empty($serviceData['package_sizes'])) {

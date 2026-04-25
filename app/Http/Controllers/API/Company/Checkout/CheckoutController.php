@@ -19,21 +19,28 @@ class CheckoutController extends Controller
     {
         $data = $request->validated();
 
-        $booking = booking::with('user.wallet')->findOrFail($request->booking_id);
+        // جيب الـ booking الأول عشان تاخد منه الـ transaction_id
+        $firstBooking = Booking::findOrFail($request->booking_id);
 
-        if ($booking->payment_status === 'paid') {
+        if ($firstBooking->payment_status === 'paid') {
             return $this->errorResponse('This booking is already paid.', 400);
         }
 
+        // جيب كل الـ bookings المرتبطة بنفس الـ transaction_id
+        $bookings = Booking::with('user.wallet')
+            ->where('transaction_id', $firstBooking->transaction_id)
+            ->get();
+
+        $totalPrice = $bookings->sum('total_price');
+        $user = $firstBooking->user;
+
         switch ($request->payment_method) {
             case 'wallet':
-                return $this->payViaWallet($booking);
-
+                return $this->payViaWallet($bookings, $user, $totalPrice);
             case 'payment':
-                return $this->payViaOnline($booking);
-
+                return $this->payViaOnline($bookings, $totalPrice, $user);
             case 'cash_on_hand':
-                return $this->payViaCash($booking);
+                return $this->payViaCash($bookings);
         }
     }
     private function payViaWallet($booking)
