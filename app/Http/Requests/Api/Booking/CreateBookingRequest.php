@@ -19,13 +19,14 @@ class CreateBookingRequest extends BaseRequest
             // Services array
             'services'                                  => 'required|array|min:1',
             'services.*.service_id'                     => 'required|exists:services,id',
-            'services.*.hours'                          => 'required|integer|min:1',
+            'services.*.hours'                          => 'nullable|integer|min:1',
+            'services.*.staff_count'                    => 'nullable|integer|min:1',
             'services.*.start_time'                     => 'required',
             'services.*.booking_date'                   => 'required|date|after_or_equal:today',
             'services.*.package_sizes'                  => 'nullable|array',
             'services.*.package_sizes.*.id'             => 'required|integer',
-            'services.*.package_sizes.*.quantity'       => 'required|integer|min:1',
-            'services.*.package_sizes.*.price'          => 'required|numeric|min:0',
+            'services.*.package_sizes.*.quantity'       => 'nullable|integer|min:1',
+            'services.*.package_sizes.*.price'          => 'nullable|numeric|min:0',
         ];
     }
 }

@@ -21,7 +21,6 @@ class BookingController extends Controller
         $data = $request->validated();
         $userId = $request->user()->id;
 
-        // Global fields
         $globalAddress = $data['address'] ?? null;
         $globalNotes   = $data['notes'] ?? null;
 
@@ -33,15 +32,19 @@ class BookingController extends Controller
         try {
             foreach ($data['services'] as $serviceData) {
 
-                $service = Service::findOrFail($serviceData['service_id']);
+                $service    = Service::findOrFail($serviceData['service_id']);
                 $bookingDate = Carbon::parse($serviceData['booking_date']);
-                $isToday = $bookingDate->isToday();
+                $isToday    = $bookingDate->isToday();
+
+                // ✅ nullable fields مع default values
+                $hours      = $serviceData['hours'] ?? 1;
+                $staffCount = $serviceData['staff_count'] ?? 1;
 
                 $unitPrice = ($isToday && $service->price_today)
                     ? $service->price_today
                     : $service->price;
 
-                $subTotal   = $unitPrice * $serviceData['hours'];
+                $subTotal   = $unitPrice * $hours;
                 $totalPrice = $subTotal - ($subTotal * ($service->discount / 100));
 
                 try {
@@ -55,7 +58,7 @@ class BookingController extends Controller
                     ], 422);
                 }
 
-                $endTime = $startTime->copy()->addHours((int) $serviceData['hours']);
+                $endTime = $startTime->copy()->addHours((int) $hours);
 
                 $booking = Booking::create([
                     'user_id'          => $userId,
@@ -64,22 +67,23 @@ class BookingController extends Controller
                     'booking_date'     => $serviceData['booking_date'],
                     'start_time'       => $startTime->format('H:i:s'),
                     'end_time'         => $endTime->format('H:i:s'),
-                    'hours'            => $serviceData['hours'],
+                    'hours'            => $hours,
+                    'count_staff'      => $staffCount,
                     'unit_price'       => $unitPrice,
                     'discount_applied' => $service->discount,
                     'total_price'      => $totalPrice,
                     'status'           => 'pending',
                     'transaction_id'   => $groupTransactionId,
-                    'address'          => $globalAddress, // ✅ Global
-                    'notes'            => $globalNotes,   // ✅ Global
+                    'address'          => $globalAddress,
+                    'notes'            => $globalNotes,
                 ]);
 
                 if (!empty($serviceData['package_sizes'])) {
                     foreach ($serviceData['package_sizes'] as $pkg) {
                         $booking->packageSizes()->create([
                             'package_size_id' => $pkg['id'],
-                            'quantity'        => $pkg['quantity'],
-                            'price'           => $pkg['price'],
+                            'quantity'        => $pkg['quantity'] ?? 1,   // ✅ nullable
+                            'price'           => $pkg['price'] ?? 0,      // ✅ nullable
                         ]);
                     }
                 }
@@ -95,7 +99,10 @@ class BookingController extends Controller
             ], 'Bookings created successfully');
         } catch (\Exception $e) {
             DB::rollBack();
-            return response()->json(['message' => 'Something went wrong', 'error' => $e->getMessage()], 500);
+            return response()->json([
+                'message' => 'Something went wrong',
+                'error'   => $e->getMessage()
+            ], 500);
         }
     }
     public function index(Request $request)
