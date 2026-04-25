@@ -11,15 +11,17 @@ class CreateBookingRequest extends BaseRequest
 
     public function rules(): array
     {
+
         return [
-            'service_id' => 'required|exists:services,id',
-            'booking_date' => 'required|date|after_or_equal:today',
-            'start_time' => 'required',
-            'hours' => 'required|integer|min:1',
-            'notes' => 'nullable|string',
-            'address' => 'nullable|string',
-            'addres_id' => 'required|string',
-            'count_staff' => 'nullable|integer|min:1'
+            // Services array بس
+            'services'                                  => 'required|array|min:1',
+            'services.*.service_id'                     => 'required|exists:services,id',
+            'services.*.hours'                          => 'required|integer|min:1',
+            'services.*.start_time'                     => 'required',
+            'services.*.package_sizes'                  => 'nullable|array',
+            'services.*.package_sizes.*.id'             => 'required|integer',
+            'services.*.package_sizes.*.quantity'       => 'required|integer|min:1',
+            'services.*.package_sizes.*.price'          => 'required|numeric|min:0',
         ];
     }
 }

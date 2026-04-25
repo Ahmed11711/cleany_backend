@@ -10,6 +10,7 @@ use App\Models\Service;
 use App\Traits\ApiResponseTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class BookingController extends Controller
@@ -18,47 +19,80 @@ class BookingController extends Controller
     public function store(CreateBookingRequest $request)
     {
         $data = $request->validated();
-        $userId = $request->user_id;
+        $userId = $request->user()->id;
 
-        $service = Service::find($request->service_id);
-        $bookingDate = Carbon::parse($request->booking_date);
-        $isToday = $bookingDate->isToday();
+        // Key مشترك لكل الـ bookings في نفس العملية
+        $groupTransactionId = 'TRX-' . strtoupper(Str::random(10));
 
-        $unitPrice = ($isToday && $service->price_today) ? $service->price_today : $service->price;
+        $bookings = [];
 
-        $subTotal = $unitPrice * $request->hours;
-        $totalPrice = $subTotal - ($subTotal * ($service->discount / 100));
+        DB::beginTransaction();
 
         try {
-            if (is_numeric($request->start_time)) {
-                $startTime = Carbon::createFromFormat('H', $request->start_time)->startOfHour();
-            } else {
-                $startTime = Carbon::parse($request->start_time);
+            foreach ($data['services'] as $serviceData) {
+
+                $service = Service::findOrFail($serviceData['service_id']);
+                $bookingDate = Carbon::parse($serviceData['booking_date']);
+                $isToday = $bookingDate->isToday();
+
+                $unitPrice = ($isToday && $service->price_today)
+                    ? $service->price_today
+                    : $service->price;
+
+                $subTotal   = $unitPrice * $serviceData['hours'];
+                $totalPrice = $subTotal - ($subTotal * ($service->discount / 100));
+
+                try {
+                    $startTime = is_numeric($serviceData['start_time'])
+                        ? Carbon::createFromFormat('H', $serviceData['start_time'])->startOfHour()
+                        : Carbon::parse($serviceData['start_time']);
+                } catch (\Exception $e) {
+                    DB::rollBack();
+                    return response()->json([
+                        'message' => 'Invalid time format for service_id ' . $serviceData['service_id']
+                    ], 422);
+                }
+
+                $endTime = $startTime->copy()->addHours((int) $serviceData['hours']);
+
+                $booking = Booking::create([
+                    'user_id'          => $userId,
+                    'company_id'       => $service->company_id,
+                    'service_id'       => $service->id,
+                    'booking_date'     => $serviceData['booking_date'],
+                    'start_time'       => $startTime->format('H:i:s'),
+                    'end_time'         => $endTime->format('H:i:s'),
+                    'hours'            => $serviceData['hours'],
+                    'unit_price'       => $unitPrice,
+                    'discount_applied' => $service->discount,
+                    'total_price'      => $totalPrice,
+                    'status'           => 'pending',
+                    'transaction_id'   => $groupTransactionId, // نفس الـ ID لكل الـ bookings
+                ]);
+
+                if (!empty($serviceData['package_sizes'])) {
+                    foreach ($serviceData['package_sizes'] as $pkg) {
+                        $booking->packageSizes()->create([
+                            'package_size_id' => $pkg['id'],
+                            'quantity'        => $pkg['quantity'],
+                            'price'           => $pkg['price'],
+                        ]);
+                    }
+                }
+
+                $bookings[] = $booking->load('packageSizes');
             }
+
+            DB::commit();
+
+            return $this->successResponse([
+                'transaction_id' => $groupTransactionId,
+                'bookings'       => $bookings,
+            ], 'Bookings created successfully');
         } catch (\Exception $e) {
-            return response()->json(['message' => 'Invalid time format. Use hour (e.g. 9) or HH:mm'], 422);
+            DB::rollBack();
+            return response()->json(['message' => 'Something went wrong', 'error' => $e->getMessage()], 500);
         }
-
-        $endTime = $startTime->copy()->addHours((int) $request->hours);
-        $booking = Booking::create([
-            'user_id' => $userId,
-            'company_id' => $service->company_id,
-            'service_id' => $service->id,
-            'booking_date' => $request->booking_date,
-            'start_time' => $startTime->format('H:i:s'),
-            'hours' => $request->hours,
-            'end_time' => $endTime->format('H:i:s'),
-            'unit_price' => $unitPrice,
-            'discount_applied' => $service->discount,
-            'total_price' => $totalPrice,
-            'status' => 'pending',
-            'count_staff' => $data['count_staff'] ?? 1,
-            'address'          => $data['address_id'],
-            'notes'            => $data['notes'] ?? null,
-            'transaction_id'    => 'TRX-' . strtoupper(Str::random(10)),
-        ]);
-
-        return $this->successResponse($booking, 'Booking created successfully');
     }
     public function index(Request $request)
     {
