@@ -15,7 +15,9 @@ class OfferStoreRequest extends BaseRequest
     {
         return [
             'title' => 'required|string|max:255',
+            'title_ar' => 'required|string|max:255',
             'description' => 'nullable|string',
+            'description_ar' => 'nullable|string',
             'is_active' => 'required|integer',
             'image_path' => 'nullable|file',
             'company_id' => 'nullable|integer|exists:companies,id',

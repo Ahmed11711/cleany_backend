@@ -15,7 +15,9 @@ class OfferUpdateRequest extends BaseRequest
     {
         return [
             'title' => 'sometimes|required|string|max:255',
+            'title_ar' => 'sometimes|required|string|max:255',
             'description' => 'nullable|sometimes|string',
+            'description_ar' => 'nullable|sometimes|string',
             'is_active' => 'sometimes|required|integer',
             'image_path' => 'nullable|sometimes|file',
             'company_id' => 'nullable|sometimes|integer|exists:companies,id',
