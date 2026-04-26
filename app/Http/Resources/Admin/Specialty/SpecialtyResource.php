@@ -11,7 +11,7 @@ class SpecialtyResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'name_ar' => $this->name . " " . "ar",
+            'name_ar' => $this->name_ar,
             'is_active' => $this->is_active,
             'company_id' => $this->company_id,
             'created_at' => $this->created_at,
