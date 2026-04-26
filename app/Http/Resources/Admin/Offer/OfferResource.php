@@ -11,7 +11,9 @@ class OfferResource extends JsonResource
         return [
             'id' => $this->id,
             'title' => $this->title,
+            'title_ar' => $this->title_ar,
             'description' => $this->description,
+            'description_ar' => $this->description_ar,
             'is_active' => $this->is_active,
             'image_path' => $this->image_path,
             'company_id' => $this->company_id,
