@@ -15,8 +15,10 @@ use App\Http\Controllers\API\Tracking\StaffTrackingController;
 use App\Http\Controllers\API\Transaction\TransactionController;
 use App\Http\Controllers\API\User\UserAddressController;
 use App\Http\Controllers\Auth\OtpController;
+use App\Http\Controllers\ContactUsController;
 use App\Http\Middleware\JwtMiddleware;
 use Illuminate\Support\Facades\Route;
+
 
 
 
@@ -59,7 +61,10 @@ Route::prefix('v1/app/auth')->group(function () {
 });
 
 
+
+
 Route::prefix('v1/app')->name('app.')->group(function () {
+    Route::post('contact', [ContactUsController::class, 'store']);
     Route::get('categories', [CategoryController::class, 'index']);
     Route::get('categories/{id}', [CategoryController::class, 'getCompaniesByCategory']);
     Route::get('companies/{id}', [CompanyController::class, 'show']);
