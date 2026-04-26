@@ -166,7 +166,7 @@ abstract class BaseController extends Controller
         if ($existingRecord && !empty($existingRecord->$field)) {
           Storage::disk($this->uploadDisk)->delete('uploads/' . $this->collectionName . '/' . basename($existingRecord->$field));
         }
-        $validated[$field] = config('app.url') . "/storage/" . $path;
+        $validated[$field] = config('app.url') . "/media/" . $path;
       }
     }
     return $validated;
