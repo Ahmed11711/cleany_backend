@@ -11,6 +11,8 @@ use App\Traits\ApiResponseTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\OtpMail;
 
 class OtpController extends Controller
 {
@@ -26,8 +28,8 @@ class OtpController extends Controller
         // Store OTP in cache for 10 minutes
         Cache::put('otp_' . $request->email, $otp, now()->addMinutes(10));
 
-        // Note: In production, send this via Mail/SMS
-        // Mail::to($request->email)->send(new OtpMail($otp));
+        Mail::to($request->email)->send(new OtpMail($otp));
+
 
         return response()->json([
             'status'  => true,
