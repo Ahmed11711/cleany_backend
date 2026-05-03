@@ -11,7 +11,7 @@ class ContactUsController extends Controller
     public function index()
     {
         // 1. Fetch the data
-        $contactus = Contactus::all();
+        return  $contactus = Contactus::all();
 
         return response()->json([
             'success' => true,
