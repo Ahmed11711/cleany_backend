@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Repositories\Contactus\ContactusRepositoryInterface;
+use App\Repositories\Contactus\ContactusRepository;
+
 use App\Repositories\booking\bookingRepositoryInterface;
 use App\Repositories\booking\bookingRepository;
 
@@ -51,6 +54,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(TransactionRepositoryInterface::class, TransactionRepository::class);
         $this->app->bind(OfferRepositoryInterface::class, OfferRepository::class);
         $this->app->bind(bookingRepositoryInterface::class, bookingRepository::class);
+        $this->app->bind(ContactusRepositoryInterface::class, ContactusRepository::class);
 }
 
     /**

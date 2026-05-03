@@ -15,10 +15,7 @@ class CreateAccountRequest extends BaseRequest
             'email' => 'required|email|unique:users,email,',
             'phone'    => 'required|string|max:20',
 
-            'password' => [
-                'required',
-                Password::min(8),
-            ],
+            'password' => 'required|min:8',
 
 
 

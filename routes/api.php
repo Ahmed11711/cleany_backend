@@ -64,7 +64,7 @@ Route::prefix('v1/app/auth')->group(function () {
 
 
 Route::prefix('v1/app')->name('app.')->group(function () {
-    Route::post('contact', [ContactUsController::class, 'store']);
+    Route::get('contact', [ContactUsController::class, 'index']);
     Route::get('categories', [CategoryController::class, 'index']);
     Route::get('categories/{id}', [CategoryController::class, 'getCompaniesByCategory']);
     Route::get('companies/{id}', [CompanyController::class, 'show']);

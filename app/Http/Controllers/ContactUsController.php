@@ -4,20 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Api\ContactusRequest;
 use App\Models\Contact;
-
+use App\Models\Contactus;
 
 class ContactUsController extends Controller
 {
-    public function store(ContactusRequest $request)
+    public function index()
     {
-        $data = $request->validated();
-
-        // هنا تقدر تخزن الداتا
-        Contact::create($data);
+        // 1. Fetch the data
+        $contactus = Contactus::all();
 
         return response()->json([
-            'message' => 'Message sent successfully',
-            'data' => $data
-        ]);
+            'success' => true,
+            'data'    => $contactus
+        ], 200);
     }
 }
