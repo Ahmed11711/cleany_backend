@@ -8,14 +8,23 @@ use App\Models\Contactus;
 
 class ContactUsController extends Controller
 {
+
+    // $contactus = Contactus::get();
+
+    // return response()->json([
+    //     'success' => true,
+    //     'data'    => $contactus
+    // ], 200);
+
     public function index()
     {
-        // 1. Fetch the data
-        return  $contactus = Contactus::all();
+        $contactus = Contactus::all()->map(function ($item) {
+            return [
+                'type'  => $item->key,
+                'value' => $item->value,
+            ];
+        });
 
-        return response()->json([
-            'success' => true,
-            'data'    => $contactus
-        ], 200);
+        return response()->json($contactus);
     }
 }
